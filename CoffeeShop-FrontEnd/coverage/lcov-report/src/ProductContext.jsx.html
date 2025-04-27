@@ -1,0 +1,442 @@
+
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Code coverage report for src/ProductContext.jsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+    
+<body>
+<div class='wrapper'>
+    <div class='pad1'>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">src</a> ProductContext.jsx</h1>
+        <div class='clearfix'>
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">13.33% </span>
+                <span class="quiet">Statements</span>
+                <span class='fraction'>2/15</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/2</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">0% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>0/8</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">15.38% </span>
+                <span class="quiet">Lines</span>
+                <span class='fraction'>2/13</span>
+            </div>
+        
+            
+        </div>
+        <p class="quiet">
+            Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
+        </p>
+        <template id="filterTemplate">
+            <div class="quiet">
+                Filter:
+                <input type="search" id="fileSearch">
+            </div>
+        </template>
+    </div>
+    <div class='status-line low'></div>
+    <pre><table class="coverage">
+<tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
+<a name='L2'></a><a href='#L2'>2</a>
+<a name='L3'></a><a href='#L3'>3</a>
+<a name='L4'></a><a href='#L4'>4</a>
+<a name='L5'></a><a href='#L5'>5</a>
+<a name='L6'></a><a href='#L6'>6</a>
+<a name='L7'></a><a href='#L7'>7</a>
+<a name='L8'></a><a href='#L8'>8</a>
+<a name='L9'></a><a href='#L9'>9</a>
+<a name='L10'></a><a href='#L10'>10</a>
+<a name='L11'></a><a href='#L11'>11</a>
+<a name='L12'></a><a href='#L12'>12</a>
+<a name='L13'></a><a href='#L13'>13</a>
+<a name='L14'></a><a href='#L14'>14</a>
+<a name='L15'></a><a href='#L15'>15</a>
+<a name='L16'></a><a href='#L16'>16</a>
+<a name='L17'></a><a href='#L17'>17</a>
+<a name='L18'></a><a href='#L18'>18</a>
+<a name='L19'></a><a href='#L19'>19</a>
+<a name='L20'></a><a href='#L20'>20</a>
+<a name='L21'></a><a href='#L21'>21</a>
+<a name='L22'></a><a href='#L22'>22</a>
+<a name='L23'></a><a href='#L23'>23</a>
+<a name='L24'></a><a href='#L24'>24</a>
+<a name='L25'></a><a href='#L25'>25</a>
+<a name='L26'></a><a href='#L26'>26</a>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a>
+<a name='L36'></a><a href='#L36'>36</a>
+<a name='L37'></a><a href='#L37'>37</a>
+<a name='L38'></a><a href='#L38'>38</a>
+<a name='L39'></a><a href='#L39'>39</a>
+<a name='L40'></a><a href='#L40'>40</a>
+<a name='L41'></a><a href='#L41'>41</a>
+<a name='L42'></a><a href='#L42'>42</a>
+<a name='L43'></a><a href='#L43'>43</a>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a>
+<a name='L46'></a><a href='#L46'>46</a>
+<a name='L47'></a><a href='#L47'>47</a>
+<a name='L48'></a><a href='#L48'>48</a>
+<a name='L49'></a><a href='#L49'>49</a>
+<a name='L50'></a><a href='#L50'>50</a>
+<a name='L51'></a><a href='#L51'>51</a>
+<a name='L52'></a><a href='#L52'>52</a>
+<a name='L53'></a><a href='#L53'>53</a>
+<a name='L54'></a><a href='#L54'>54</a>
+<a name='L55'></a><a href='#L55'>55</a>
+<a name='L56'></a><a href='#L56'>56</a>
+<a name='L57'></a><a href='#L57'>57</a>
+<a name='L58'></a><a href='#L58'>58</a>
+<a name='L59'></a><a href='#L59'>59</a>
+<a name='L60'></a><a href='#L60'>60</a>
+<a name='L61'></a><a href='#L61'>61</a>
+<a name='L62'></a><a href='#L62'>62</a>
+<a name='L63'></a><a href='#L63'>63</a>
+<a name='L64'></a><a href='#L64'>64</a>
+<a name='L65'></a><a href='#L65'>65</a>
+<a name='L66'></a><a href='#L66'>66</a>
+<a name='L67'></a><a href='#L67'>67</a>
+<a name='L68'></a><a href='#L68'>68</a>
+<a name='L69'></a><a href='#L69'>69</a>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a>
+<a name='L81'></a><a href='#L81'>81</a>
+<a name='L82'></a><a href='#L82'>82</a>
+<a name='L83'></a><a href='#L83'>83</a>
+<a name='L84'></a><a href='#L84'>84</a>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a>
+<a name='L89'></a><a href='#L89'>89</a>
+<a name='L90'></a><a href='#L90'>90</a>
+<a name='L91'></a><a href='#L91'>91</a>
+<a name='L92'></a><a href='#L92'>92</a>
+<a name='L93'></a><a href='#L93'>93</a>
+<a name='L94'></a><a href='#L94'>94</a>
+<a name='L95'></a><a href='#L95'>95</a>
+<a name='L96'></a><a href='#L96'>96</a>
+<a name='L97'></a><a href='#L97'>97</a>
+<a name='L98'></a><a href='#L98'>98</a>
+<a name='L99'></a><a href='#L99'>99</a>
+<a name='L100'></a><a href='#L100'>100</a>
+<a name='L101'></a><a href='#L101'>101</a>
+<a name='L102'></a><a href='#L102'>102</a>
+<a name='L103'></a><a href='#L103'>103</a>
+<a name='L104'></a><a href='#L104'>104</a>
+<a name='L105'></a><a href='#L105'>105</a>
+<a name='L106'></a><a href='#L106'>106</a>
+<a name='L107'></a><a href='#L107'>107</a>
+<a name='L108'></a><a href='#L108'>108</a>
+<a name='L109'></a><a href='#L109'>109</a>
+<a name='L110'></a><a href='#L110'>110</a>
+<a name='L111'></a><a href='#L111'>111</a>
+<a name='L112'></a><a href='#L112'>112</a>
+<a name='L113'></a><a href='#L113'>113</a>
+<a name='L114'></a><a href='#L114'>114</a>
+<a name='L115'></a><a href='#L115'>115</a>
+<a name='L116'></a><a href='#L116'>116</a>
+<a name='L117'></a><a href='#L117'>117</a>
+<a name='L118'></a><a href='#L118'>118</a>
+<a name='L119'></a><a href='#L119'>119</a>
+<a name='L120'></a><a href='#L120'>120</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import React, { createContext, useState } from "react";
+import espressoImg from "./assets/espresso.jpg";
+import cappuccinoImg from "./assets/cappuccino.webp";
+import americanoImg from "./assets/americano.png";
+import captainsQuartetImg from "./assets/captains_quartet.jpg";
+import krakensIcedImg from "./assets/kraken_iced.jpg";
+import deadMansDripImg from "./assets/dead_mans_drip.jpg";
+import shiverMeColdBrewImg from "./assets/shiver_me_cold_brew.jpg";
+import frappuccinoImg from "./assets/frappuccino.jpg";
+import icelatteImg from "./assets/ice_latte.jpg";
+import underTheWaterImg from "./assets/under_the_water_tea.jpg";
+import mermaidsChaiImg from "./assets/mermaids_chai.webp";
+import stormyEarlGreyImg from "./assets/stormy_earl_grey.jpg";
+import mochaImg from "./assets/mocha.jpg";
+import flatWhiteImg from "./assets/flat_white.jpg";
+import macchiatoImg from "./assets/macchiato.jpg";
+import turkishCoffeeImg from "./assets/turkish_coffee.jpg";
+import irishCoffeeImg from "./assets/irish_coffee.jpg";
+import viennaCoffeeImg from "./assets/vienna_coffee.jpg";
+import buccaneersBrewImg from "./assets/buccaneers_brew.jpg";
+import jollyRogerJavaImg from "./assets/jolly_roger_java.jpg";
+import seaWitchsLatteImg from "./assets/sea_witchs_latte.jpg";
+import coconutImg from "./assets/coconut_coffee.jpg";
+import blackbeardsBlendImg from "./assets/blackbeards_blend.jpg";
+import goldRushEspressoImg from "./assets/gold_rush_espresso.jpg";
+import vanillaColdBrewImg from "./assets/vanilla_cold_brew.jpg";
+import chocolateHazelnutImg from "./assets/chocolate_hazelnut_cold_brew.jpg";
+import saltedCaramelImg from "./assets/salted_caramel.jpg";
+import coconutColdBrewImg from "./assets/coconut_cold_brew.jpg";
+import nitroBrewImg from "./assets/nitro_brew.jpg";
+import mapleBourbonImg from "./assets/maple_bourbon.jpg";
+import piratesGreenImg from "./assets/pirates_green_tea.jpg";
+import spicedRumTeaImg from "./assets/spiced_rum_tea.jpg";
+import goldenTurmericTeaImg from "./assets/golden_turmeric.jpg";
+import berryTreasureImg from "./assets/berry_treasure.jpg";
+import chamomileImg from "./assets/captains_chamomile.jpg";
+import mintyShipmateImg from "./assets/minty.jpg";
+&nbsp;
+export const ProductContext = createContext();
+&nbsp;
+const ProductProvider = <span class="fstat-no" title="function not covered" >({</span> children }) =&gt; {
+  const [products, setProducts] = <span class="cstat-no" title="statement not covered" >useState([</span>
+    // Classic Coffee
+    { id: 1, name: "Espresso", category: "Classic Coffee", price: 5, image: espressoImg, description: "Bold and strong, just like the waves of the sea" },
+    { id: 2, name: "Americano", category: "Classic Coffee", price: 3.9, image: americanoImg, description: "A softened espresso with a bit of hot water" },
+    { id: 3, name: "Cappuccino", category: "Classic Coffee", price: 6.2, image: cappuccinoImg, description: "Foamy coffee, but enough to keep you awake for a whole day" },
+    { id: 4, name: "Mocha", category: "Classic Coffee", price: 6.5, image: mochaImg, description: "A chocolatey delight with an espresso kick" },
+    { id: 5, name: "Flat White", category: "Classic Coffee", price: 6.7, image: flatWhiteImg, description: "Silky smooth espresso with creamy milk" },
+    { id: 6, name: "Macchiato", category: "Classic Coffee", price: 5.2, image: macchiatoImg, description: "Espresso topped with a hint of frothy milk" },
+    { id: 7, name: "Turkish Coffee", category: "Classic Coffee", price: 4.5, image: turkishCoffeeImg, description: "Rich, unfiltered, and steeped in tradition" },
+    { id: 8, name: "Irish Coffee", category: "Classic Coffee", price: 9.0, image: irishCoffeeImg, description: "Coffee with a touch of whiskey and whipped cream" },
+    { id: 9, name: "Vienna Coffee", category: "Classic Coffee", price: 7.5, image: viennaCoffeeImg, description: "Strong espresso topped with whipped cream" },
+&nbsp;
+    // Specialty Drinks
+    { id: 10, name: "The Captain's Quartet", category: "Specialty Drinks", price: 8.3, image: captainsQuartetImg, description: "A perfect choice for a group of four coffee lovers" },
+    { id: 11, name: "Kraken's Iced Coffee", category: "Specialty Drinks", price: 3, image: krakensIcedImg, description: "Strong ice coffee, the best to drink before trying to engage the kraken" },
+    { id: 12, name: "Dead Man's Drip", category: "Specialty Drinks", price: 3.2, image: deadMansDripImg, description: "Intense espresso with a lingering bitter taste" },
+    { id: 13, name: "Buccaneer's Brew", category: "Specialty Drinks", price: 7.5, image: buccaneersBrewImg, description: "A daring mix of espresso, caramel, and sea salt" },
+    { id: 14, name: "Jolly Roger Java", category: "Specialty Drinks", price: 6.9, image: jollyRogerJavaImg, description: "A pirate's favorite—espresso with a hint of rum flavor" },
+    { id: 15, name: "Sea Witch's Latte", category: "Specialty Drinks", price: 8.2, image: seaWitchsLatteImg, description: "Dark roast with a hint of vanilla and magic" },
+    { id: 16, name: "Coconut Coffee", category: "Specialty Drinks", price: 7.8, image: coconutImg, description: "A tropical coffee with a splash of coconut milk" },
+    { id: 17, name: "Blackbeard's Blend", category: "Specialty Drinks", price: 9.0, image: blackbeardsBlendImg, description: "Bold and mysterious, just like the legend" },
+    { id: 18, name: "Gold Rush Espresso", category: "Specialty Drinks", price: 8.5, image: goldRushEspressoImg, description: "A golden-hued coffee with a shot of honey" },
+&nbsp;
+    // Cold Brews
+    { id: 19, name: "Shiver Me Cold Brew", category: "Cold Brews", price: 21, image: shiverMeColdBrewImg, description: "Chilly bitter taste with a touch of milk" },
+    { id: 20, name: "Frappuccino", category: "Cold Brews", price: 2, image: frappuccinoImg, description: "Chocholatey iced coffee" },
+    { id: 21, name: "Ice Latte", category: "Cold Brews", price: 11, image: icelatteImg, description: "Perfect for any girlie who likes adventures &lt;3" },
+    { id: 22, name: "Vanilla Sweet Cold Brew", category: "Cold Brews", price: 6.5, image: vanillaColdBrewImg, description: "Smooth cold brew infused with vanilla syrup" },
+    { id: 23, name: "Chocolate Hazelnut Cold Brew", category: "Cold Brews", price: 7.0, image: chocolateHazelnutImg, description: "Nutty, chocolatey, and ice cold" },
+    { id: 24, name: "Salted Caramel Cold Brew", category: "Cold Brews", price: 6.8, image: saltedCaramelImg, description: "A perfect mix of coffee and caramel with a salty twist" },
+    { id: 25, name: "Pirate's Coconut Cold Brew", category: "Cold Brews", price: 7.2, image: coconutColdBrewImg, description: "Coconut-flavored cold brew for a tropical twist" },
+    { id: 26, name: "Dark Roast Nitro", category: "Cold Brews", price: 8.0, image: nitroBrewImg, description: "A strong, smooth nitro-infused cold brew" },
+    { id: 27, name: "Maple Bourbon Cold Brew", category: "Cold Brews", price: 9.5, image: mapleBourbonImg, description: "Rich maple and bourbon flavor blended into cold brew" },
+&nbsp;
+    // Teas
+    { id: 28, name: "Under The Water Tea", category: "Teas", price: 7.7, image: underTheWaterImg, description: "Soothing and calming, with a sense of danger" },
+    { id: 29, name: "Mermaid's Chai", category: "Teas", price: 9.9, image: mermaidsChaiImg, description: "It seems lite its taste is calling to you" },
+    { id: 30, name: "Stormy Earl Grey", category: "Teas", price: 8.5, image: stormyEarlGreyImg, description: "A refreshing and warming adventure" },
+    { id: 31, name: "Pirate's Green Tea", category: "Teas", price: 6.5, image: piratesGreenImg, description: "Refreshing and packed with antioxidants" },
+    { id: 32, name: "Spiced Rum Tea", category: "Teas", price: 7.0, image: spicedRumTeaImg, description: "Black tea with a hint of warm spices" },
+    { id: 33, name: "Golden Turmeric Tea", category: "Teas", price: 7.2, image: goldenTurmericTeaImg, description: "A warm, soothing tea with turmeric and honey" },
+    { id: 34, name: "Berry Treasure Tea", category: "Teas", price: 8.5, image: berryTreasureImg, description: "A fruity tea blend packed with flavor" },
+    { id: 35, name: "Captain’s Chamomile", category: "Teas", price: 6.8, image: chamomileImg, description: "A relaxing chamomile tea with a citrus hint" },
+    { id: 36, name: "Minty Shipmate Tea", category: "Teas", price: 6.9, image: mintyShipmateImg, description: "A refreshing peppermint tea" },
+&nbsp;
+  ]);
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+  
+&nbsp;
+  // CRUD Operations
+  const addProduct = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(n</span>ewProduct) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    setProducts([...products, { ...newProduct, id: Date.now() }]);</span>
+  };
+&nbsp;
+  const updateProduct = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(u</span>pdatedProduct) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    setProducts(<span class="fstat-no" title="function not covered" >pr</span>evProducts =&gt; </span>
+<span class="cstat-no" title="statement not covered" >        prevProducts.map(<span class="fstat-no" title="function not covered" >p </span>=&gt; <span class="cstat-no" title="statement not covered" >p.id === updatedProduct.id ? updatedProduct : p)</span></span>
+    );
+  };
+&nbsp;
+  const deleteProduct = <span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >(i</span>d) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >    setProducts(<span class="fstat-no" title="function not covered" >pr</span>evProducts =&gt; {</span>
+        const updatedProducts = <span class="cstat-no" title="statement not covered" >prevProducts.filter(<span class="fstat-no" title="function not covered" >pr</span>oduct =&gt; <span class="cstat-no" title="statement not covered" >product.id !== id)</span>;</span>
+<span class="cstat-no" title="statement not covered" >        return updatedProducts;</span>
+    });
+  };
+  
+&nbsp;
+<span class="cstat-no" title="statement not covered" >  return (</span>
+    &lt;ProductContext.Provider value={{ products, addProduct, updateProduct, deleteProduct }}&gt;
+      {children}
+    &lt;/ProductContext.Provider&gt;
+  );
+};
+&nbsp;
+export default ProductProvider;</pre></td></tr></table></pre>
+
+                <div class='push'></div><!-- for sticky footer -->
+            </div><!-- /wrapper -->
+            <div class='footer quiet pad2 space-top1 center small'>
+                Code coverage generated by
+                <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
+                at 2025-03-24T09:02:23.854Z
+            </div>
+        <script src="../prettify.js"></script>
+        <script>
+            window.onload = function () {
+                prettyPrint();
+            };
+        </script>
+        <script src="../sorter.js"></script>
+        <script src="../block-navigation.js"></script>
+    </body>
+</html>
+    
