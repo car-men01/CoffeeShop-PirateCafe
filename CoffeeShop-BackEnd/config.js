@@ -14,8 +14,13 @@ const SERVER_HOST = '0.0.0.0';
 const API_PORT = 5000;
 const WEBSOCKET_PORT = 5001;
 
+
+// JWT Secret for authentication
+const JWT_SECRET = process.env.JWT_SECRET || 'piratecafesecret';
+
 module.exports = {
   SERVER_HOST,
   API_PORT,
-  WEBSOCKET_PORT
+  WEBSOCKET_PORT,
+  JWT_SECRET
 };

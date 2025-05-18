@@ -720,22 +720,38 @@ export const NetworkProvider = ({ children }) => {
         }
       }
       
-      // Normal online API handling
       try {
+        // Get the authentication token
+        const token = localStorage.getItem('authToken');
+        
+        // Set up headers with authentication token
+        const headers = {
+          'Content-Type': 'application/json'
+        };
+        
+        if (token) {
+          headers['Authorization'] = `Bearer ${token}`;
+        } else {
+          console.warn('No authentication token found for request to', path);
+        }
+        
+        // Configure axios options
+        const config = { headers };
+        
         let response;
         
         switch (method) {
           case 'GET':
-            response = await axios.get(`${API_URL}${path}`);
+            response = await axios.get(`${API_URL}${path}`, config);
             break;
           case 'POST':
-            response = await axios.post(`${API_URL}${path}`, data);
+            response = await axios.post(`${API_URL}${path}`, data, config);
             break;
           case 'PUT':
-            response = await axios.put(`${API_URL}${path}`, data);
+            response = await axios.put(`${API_URL}${path}`, data, config);
             break;
           case 'DELETE':
-            response = await axios.delete(`${API_URL}${path}`);
+            response = await axios.delete(`${API_URL}${path}`, config);
             break;
           default:
             throw new Error(`Invalid method: ${method}`);
@@ -743,6 +759,12 @@ export const NetworkProvider = ({ children }) => {
         
         return response;
       } catch (error) {
+        // If we get a 401 Unauthorized error, clear the token
+        if (error.response && error.response.status === 401) {
+          console.error('Authentication error. Token may be invalid or expired.');
+          // Optionally, clear the token to force re-authentication
+          // localStorage.removeItem('authToken');
+        }
         console.error(`API ${method} error:`, error);
         throw error;
       }
@@ -854,6 +876,35 @@ export const NetworkProvider = ({ children }) => {
   const apiPut = (path, data) => safeApiCall('PUT', path, data);
   const apiDelete = (path) => safeApiCall('DELETE', path);
 
+  // Add this function to check if user is authenticated
+  const isAuthenticated = () => {
+    return localStorage.getItem('authToken') !== null;
+  };
+
+  // Add this function near your other helper functions
+  const login = async (email, password) => {
+    try {
+      const response = await axios.post(`${API_URL}/auth/login`, { email, password });
+      
+      if (response.data && response.data.token) {
+        // Store the token in localStorage
+        localStorage.setItem('authToken', response.data.token);
+        console.log('Token stored successfully in NetworkContext');
+        return response;
+      }
+      throw new Error('No token received from server');
+    } catch (error) {
+      console.error('Login error in NetworkContext:', error);
+      throw error;
+    }
+  };
+
+  const logout = () => {
+    localStorage.removeItem('authToken');
+    console.log('Token removed from localStorage');
+  };
+
+  // Then include these in your context value
   return (
     <NetworkContext.Provider value={{
       isOnline,
@@ -864,7 +915,10 @@ export const NetworkProvider = ({ children }) => {
       apiGet,
       apiPost,
       apiPut,
-      apiDelete
+      apiDelete,
+      isAuthenticated,
+      login,      // Add this
+      logout      // Add this
     }}>
       {children}
     </NetworkContext.Provider>

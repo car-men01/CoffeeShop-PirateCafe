@@ -9,6 +9,7 @@ import { API_URL, IMAGES_BASE_URL } from "../config";
 const AddPage = () => {
     const navigate = useNavigate();
     const { isOnline, isServerUp, apiPost } = useContext(NetworkContext); // MOVE THIS HERE
+    const networkContext = useContext(NetworkContext); // This line was missing or incorrect
 
     // State to hold form inputs
     const [product, setProduct] = useState({
@@ -33,31 +34,35 @@ const AddPage = () => {
         e.preventDefault();
 
         try {
+            // Check authentication first
+            if (!networkContext.isAuthenticated()) {
+            setSubmissionStatus("error");
+            setErrorMessage("Please log in to add products");
+            return;
+            }
+
             // Basic validation
             if (!product.name || !product.price || !product.category || !product.description) {
-                setSubmissionStatus("error");
-                setErrorMessage("Please fill in all fields");
-                return;
+            setSubmissionStatus("error");
+            setErrorMessage("Please fill in all fields");
+            return;
             }
 
             // Convert price to a number for the API
             const productToSubmit = { 
-                ...product, 
-                price: parseFloat(product.price) 
+            ...product, 
+            price: parseFloat(product.price) 
             };
 
             // Add the product via network-aware context
-            const response = await apiPost("/products", productToSubmit);
+            const response = await networkContext.apiPost("/products", productToSubmit);
             
             console.log("API response:", response);
-            
-            // If we got a real online response, the NetworkContext has already added it to products
-            // If we got an offline response, NetworkContext has already added it to cachedProducts
             
             // Set success message
             setSubmissionStatus("success");
             setErrorMessage("");
-            
+
             // Reset the form
             setProduct({
                 name: "",
@@ -75,15 +80,15 @@ const AddPage = () => {
                 navigate("/menu");
             }, 1500);
             
-        } catch (error) {
-            // Handle API error
-            console.error("Error adding product:", error);
-            setSubmissionStatus("error");
+        } catch (err) {
+            console.error("Error submitting product:", err);
             
-            if (error.response && error.response.data && error.response.data.error) {
-                setErrorMessage(error.response.data.error);
+            if (err.response && err.response.status === 401) {
+            setSubmissionStatus("error");
+            setErrorMessage("Authentication required. Please log in again.");
             } else {
-                setErrorMessage("An error occurred while submitting the form. Please try again.");
+            setSubmissionStatus("error");
+            setErrorMessage(err.response?.data?.error || "Error adding product");
             }
         }
     };
