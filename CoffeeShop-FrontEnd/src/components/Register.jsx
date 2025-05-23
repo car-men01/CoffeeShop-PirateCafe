@@ -41,17 +41,29 @@ const Register = () => {
     setIsLoading(true);
     
     try {
-      await register(formData.username, formData.email, formData.password);
+      // Store the response from register
+      const response = await register(formData.username, formData.email, formData.password);
+      
       // If registration successful, automatically log in
       if (response && response.data && response.data.token) {
-        await login(formData.email, formData.password);
-        navigate('/');
+        try {
+          // Attempt to log in with the newly created account
+          await login(formData.email, formData.password);
+          navigate('/');
+        } catch (loginError) {
+          console.error('Auto-login failed after registration:', loginError);
+          navigate('/login');
+        }
       } else {
         // If no token in response, just navigate to login
         navigate('/login');
       }
     } catch (err) {
-      setError(err.response?.data?.error || 'Failed to register');
+      if (err.response?.status === 409) {
+        setError('Username or email already in use');
+      } else {
+        setError(err.response?.data?.error || 'Failed to register');
+      }
     } finally {
       setIsLoading(false);
     }
