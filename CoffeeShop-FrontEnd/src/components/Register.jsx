@@ -15,7 +15,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   
-  const { register } = useContext(AuthContext);
+  const { register, login } = useContext(AuthContext);
   const navigate = useNavigate();
   
   const handleChange = (e) => {
@@ -44,7 +44,7 @@ const Register = () => {
       await register(formData.username, formData.email, formData.password);
       // If registration successful, automatically log in
       if (response && response.data && response.data.token) {
-        await login(formData.email, formData.password, response.data);
+        await login(formData.email, formData.password);
         navigate('/');
       } else {
         // If no token in response, just navigate to login
