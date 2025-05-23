@@ -42,7 +42,14 @@ const Register = () => {
     
     try {
       await register(formData.username, formData.email, formData.password);
-      navigate('/');
+      // If registration successful, automatically log in
+      if (response && response.data && response.data.token) {
+        await login(formData.email, formData.password, response.data);
+        navigate('/');
+      } else {
+        // If no token in response, just navigate to login
+        navigate('/login');
+      }
     } catch (err) {
       setError(err.response?.data?.error || 'Failed to register');
     } finally {
