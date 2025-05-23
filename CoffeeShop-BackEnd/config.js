@@ -24,7 +24,8 @@ const DB_CONFIG = {
   host: process.env.DB_HOST || 'localhost',
   port: process.env.DB_PORT || 5432,
   database: process.env.DB_NAME || 'coffeeshop',
-  ssl: process.env.DB_SSL === 'true'
+  ssl: process.env.DB_SSL === 'true',
+  ssl: process.env.NODE_ENV === 'production' ? { rejectUnauthorized: false } : false
 };
 
 module.exports = {

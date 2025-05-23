@@ -6,6 +6,14 @@ const bcrypt = require('bcrypt');
 const setupDatabase = async () => {
   try {
     console.log('Starting database setup...');
+
+    if (process.env.NODE_ENV === 'production') {
+      const userCount = await User.count();
+      if (userCount > 0) {
+        console.log('Database already contains data, skipping setup.');
+        return;
+      }
+    }
     
     // Force sync all models to recreate tables completely
     // This ensures all columns are properly created, including UserId in Products
