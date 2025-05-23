@@ -18,9 +18,19 @@ const WEBSOCKET_PORT = 5001;
 // JWT Secret for authentication
 const JWT_SECRET = process.env.JWT_SECRET || 'piratecafesecret';
 
+const DB_CONFIG = {
+  user: process.env.DB_USER || 'postgres',
+  password: process.env.DB_PASSWORD || 'Bcarmen933!',
+  host: process.env.DB_HOST || 'localhost',
+  port: process.env.DB_PORT || 5432,
+  database: process.env.DB_NAME || 'coffeeshop',
+  ssl: process.env.DB_SSL === 'true'
+};
+
 module.exports = {
   SERVER_HOST,
   API_PORT,
   WEBSOCKET_PORT,
-  JWT_SECRET
+  JWT_SECRET,
+  DB_CONFIG
 };
