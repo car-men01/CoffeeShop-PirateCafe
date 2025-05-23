@@ -20,8 +20,14 @@ const PORT = config.API_PORT;
 const HOST = config.SERVER_HOST;
 
 // Then configure middleware
-app.use(cors());
-app.use(bodyParser.json());
+app.use(cors({
+  origin: [
+    'https://coffeeshop-frontend-rust.vercel.app',
+    'https://coffeeshop-frontend-n4far1shq-carmens-projects-48a48c0c.vercel.app'
+  ],
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true
+}));app.use(bodyParser.json());
 
 // Set up static file serving
 app.use('/assets', express.static(path.join(__dirname, 'data/assets')));
