@@ -10,7 +10,8 @@ const sequelize = require('./models/index');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
 const { startMonitoring } = require('./utils/userMonitoring');
-const { server: wsServer, generatedProducts } = require('./websocketServer');
+// const { server: wsServer, generatedProducts } = require('./websocketServer');
+const { server: wsHttpServer } = require('./websocketServer');
 
 
 // Initialize the Express app first
@@ -43,24 +44,42 @@ sequelize.authenticate()
   .catch(err => console.error('Database connection error:', err));
 
 // Start the server
-const server = app.listen(PORT, HOST, () => {
+// const server = app.listen(PORT, HOST, () => {
+//   console.log(`Server running on http://${HOST}:${PORT}`);
+//   console.log(`For local access: http://localhost:${PORT}`);
+  
+//   // Log network interfaces to help identify the server's IP address
+//   const { networkInterfaces } = require('os');
+//   const nets = networkInterfaces();
+  
+//   console.log('\nAvailable on the following IP addresses:');
+//   for (const name of Object.keys(nets)) {
+//     for (const net of nets[name]) {
+//       // Skip internal and non-IPv4 addresses
+//       if (net.family === 'IPv4' && !net.internal) {
+//         console.log(`http://${net.address}:${PORT}`);
+//       }
+//     }
+//   }
+// });
+
+wsHttpServer.on('request', app);
+
+// Start the combined HTTP/WebSocket server
+wsHttpServer.listen(PORT, HOST, () => {
   console.log(`Server running on http://${HOST}:${PORT}`);
   console.log(`For local access: http://localhost:${PORT}`);
-  
+
   // Log network interfaces to help identify the server's IP address
   const { networkInterfaces } = require('os');
   const nets = networkInterfaces();
-  
+
   console.log('\nAvailable on the following IP addresses:');
   for (const name of Object.keys(nets)) {
     for (const net of nets[name]) {
-      // Skip internal and non-IPv4 addresses
       if (net.family === 'IPv4' && !net.internal) {
         console.log(`http://${net.address}:${PORT}`);
       }
     }
   }
 });
-
-// Attach WebSocket to the same HTTP server
-wsServer.listen(server);
