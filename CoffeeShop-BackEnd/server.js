@@ -10,6 +10,8 @@ const sequelize = require('./models/index');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
 const { startMonitoring } = require('./utils/userMonitoring');
+const { server: wsServer, generatedProducts } = require('./websocketServer');
+
 
 // Initialize the Express app first
 const app = express();
@@ -32,10 +34,6 @@ app.use('/analytics', analyticsRoutes);
 app.use('/auth', authRoutes);
 app.use('/admin', adminRoutes);
 
-// Start the WebSocket server for product generation
-// This line was missing from your code, but likely exists elsewhere
-require('./websocketServer');
-
 // Start the user monitoring service
 startMonitoring();
 
@@ -45,7 +43,7 @@ sequelize.authenticate()
   .catch(err => console.error('Database connection error:', err));
 
 // Start the server
-app.listen(PORT, HOST, () => {
+const server = app.listen(PORT, HOST, () => {
   console.log(`Server running on http://${HOST}:${PORT}`);
   console.log(`For local access: http://localhost:${PORT}`);
   
@@ -63,3 +61,6 @@ app.listen(PORT, HOST, () => {
     }
   }
 });
+
+// Attach WebSocket to the same HTTP server
+wsServer.listen(server);

@@ -3,13 +3,13 @@ const { faker } = require('@faker-js/faker');
 const fs = require('fs');
 const path = require('path');
 const config = require('./config');
+const http = require('http');
     
-// Create WebSocket server
+// Create WebSocket server attached to HTTP server
+const server = http.createServer();
 const wss = new WebSocket.Server({ 
-  port: config.WEBSOCKET_PORT,
-  host: config.SERVER_HOST
+  server: server 
 });
-console.log(`WebSocket server started on ${config.SERVER_HOST}:${config.WEBSOCKET_PORT}`);
 
 // Store for generated products that persists during server lifetime
 const generatedProducts = {
@@ -29,7 +29,10 @@ const generatedProducts = {
 };
 
 // Export the generatedProducts store so it can be accessed by other modules
-module.exports = { generatedProducts };
+module.exports = { 
+    generatedProducts,
+    server 
+};
 
 // Track active generation intervals for each client
 const clientGenerators = new Map();

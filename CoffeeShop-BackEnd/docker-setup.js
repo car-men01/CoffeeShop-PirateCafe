@@ -5,13 +5,7 @@ const bcrypt = require('bcrypt');
 
 const setupDatabase = async () => {
   try {
-    console.log('Starting database setup...');
-    
-    // Force sync all models to recreate tables completely
-    // This ensures all columns are properly created, including UserId in Products
-    console.log('Creating database tables with the correct schema...');
-    await sequelize.sync({ force: true });
-    //console.log('Database schema synchronized');
+    console.log('Starting Docker database setup...');
     
     // Create admin user first so we can reference it later
     console.log('Creating admin user...');
@@ -35,63 +29,54 @@ const setupDatabase = async () => {
         return a.localeCompare(b);
       });
       
-      // Create categories first
+      // Use findOrCreate for categories to prevent duplicate key errors
       console.log('Creating product categories...');
       const categoryMap = {};
       for (let i = 0; i < uniqueCategories.length; i++) {
         const category = uniqueCategories[i];
-        const newCategory = await ProductCategory.create({
-          name: category,
-          displayOrder: i
-        }, { transaction });
+        const [newCategory] = await ProductCategory.findOrCreate({
+          where: { name: category },
+          defaults: { displayOrder: i },
+          transaction
+        });
         categoryMap[category] = newCategory.id;
       }
       
-      // Then create products with references to category IDs AND the admin user
+      // For each product, check if it already exists
       console.log('Creating products with admin user reference...');
-      for (const product of initialProducts) {
-        await Product.create({
-          name: product.name,
-          price: product.price,
-          image: product.image,
-          description: product.description,
-          ProductCategoryId: categoryMap[product.category],
-          UserId: adminUser.id // Assign all products to admin user
-        }, { transaction });
+      for (const productData of initialProducts) {
+        // Check if product already exists
+        const existingProduct = await Product.findOne({
+          where: { 
+            name: productData.name,
+            ProductCategoryId: categoryMap[productData.category] 
+          },
+          transaction
+        });
+        
+        if (!existingProduct) {
+          await Product.create({
+            name: productData.name,
+            price: productData.price,
+            image: productData.image,
+            description: productData.description,
+            ProductCategoryId: categoryMap[productData.category],
+            UserId: adminUser.id
+          }, { transaction });
+        }
       }
       
       console.log('Initial data inserted successfully');
-      
-      // Create some sample activity logs for demonstration
-      console.log('Creating sample activity logs...');
-      await ActivityLog.create({
-        UserId: adminUser.id,
-        action: 'CREATE',
-        entityType: 'Product',
-        entityId: 1,
-        details: 'Initial product creation',
-        timestamp: new Date()
-      }, { transaction });
-      
-      await ActivityLog.create({
-        UserId: adminUser.id,
-        action: 'READ', 
-        entityType: 'Product',
-        entityId: null,
-        details: 'Viewed product list',
-        timestamp: new Date(Date.now() - 3600000) // 1 hour ago
-      }, { transaction });
     });
     
     // Create a regular user for testing
     console.log('Creating a regular test user...');
     await createRegularUser();
     
-    console.log('Database setup completed successfully!');
+    console.log('Docker database setup completed successfully!');
   } catch (err) {
-    console.error('Error setting up database:', err);
-  } finally {
-    await sequelize.close();
+    console.error('Error during Docker database setup:', err);
+    throw err; // Re-throw to ensure Docker startup fails if this is critical
   }
 };
 
@@ -122,7 +107,7 @@ const createAdminUser = async () => {
     return admin;
   } catch (err) {
     console.error('Error creating admin user:', err);
-    throw err; // Re-throw to stop the setup process
+    throw err;
   }
 };
 
@@ -156,7 +141,14 @@ const createRegularUser = async () => {
   }
 };
 
-// Start database setup
-setupDatabase()
-  .then(() => console.log('Database setup complete'))
-  .catch(err => console.error('Database setup failed:', err));
+// Run this function if this script is executed directly
+if (require.main === module) {
+  setupDatabase()
+    .then(() => console.log('Docker database initialization complete'))
+    .catch(err => {
+      console.error('Docker database initialization failed:', err);
+      process.exit(1); // Exit with error code
+    });
+}
+
+module.exports = setupDatabase;
