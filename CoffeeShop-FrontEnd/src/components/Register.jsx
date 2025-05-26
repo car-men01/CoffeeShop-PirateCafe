@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
+import VerifyCode from './VerifyCode';
 import '../App.css';
 
 const Register = () => {
@@ -15,7 +16,7 @@ const Register = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   
-  const { register, login } = useContext(AuthContext);
+  const { register, completeAuthentication, pendingVerification, cancelVerification } = useContext(AuthContext);
   const navigate = useNavigate();
   
   const handleChange = (e) => {
@@ -41,23 +42,10 @@ const Register = () => {
     setIsLoading(true);
     
     try {
-      // Store the response from register
-      const response = await register(formData.username, formData.email, formData.password);
+      // First step of registration - will trigger 2FA
+      await register(formData.username, formData.email, formData.password);
       
-      // If registration successful, automatically log in
-      if (response && response.data && response.data.token) {
-        try {
-          // Attempt to log in with the newly created account
-          await login(formData.email, formData.password);
-          navigate('/');
-        } catch (loginError) {
-          console.error('Auto-login failed after registration:', loginError);
-          navigate('/login');
-        }
-      } else {
-        // If no token in response, just navigate to login
-        navigate('/login');
-      }
+      // The VerifyCode component will be shown based on pendingVerification state
     } catch (err) {
       if (err.response?.status === 409) {
         setError('Username or email already in use');
@@ -69,6 +57,12 @@ const Register = () => {
     }
   };
 
+  const handleVerificationSuccess = (userData) => {
+    // Complete the authentication process with user data
+    completeAuthentication(userData);
+    navigate('/');
+  };
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
@@ -77,6 +71,20 @@ const Register = () => {
     setShowConfirmPassword(!showConfirmPassword);
   };
   
+  // If waiting for verification after registration, show verification component
+  if (pendingVerification && pendingVerification.isRegistration) {
+    return (
+      <VerifyCode 
+        userId={pendingVerification.userId}
+        email={pendingVerification.email}
+        onSuccess={handleVerificationSuccess}
+        onCancel={cancelVerification}
+        isRegistration={true}
+      />
+    );
+  }
+  
+  // Otherwise, show the registration form
   return (
     <div className="register-container">
       <div className="register-form">

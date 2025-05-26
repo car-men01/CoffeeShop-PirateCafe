@@ -2425,3 +2425,171 @@ body {
   border-radius: 4px;
   border-left: 4px solid #2e7d32;
 }
+
+/* Add these styles to your existing CSS file */
+
+/* Verification Code Styles */
+.verify-code-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+  background-color: #ECE0C7;
+}
+
+.verify-code-form {
+  width: 100%;
+  max-width: 450px;
+  padding: 30px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.verify-code-form h2 {
+  margin-bottom: 20px;
+  color: #7C90A0;
+}
+
+.verify-code-form p {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #555;
+}
+
+.verify-code-form input {
+  width: 100%;
+  padding: 15px;
+  margin-bottom: 20px;
+  font-size: 20px;
+  letter-spacing: 5px;
+  text-align: center;
+  border: 2px solid #7C90A0;
+  border-radius: 8px;
+}
+
+.verify-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.verify-button {
+  width: 60%;
+  padding: 12px;
+  background-color: #7C90A0;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.secondary-button {
+  width: 35%;
+  padding: 12px;
+  background-color: #e0e0e0;
+  color: #333;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.verify-button:hover {
+  background-color: #5a6f7a;
+}
+
+.secondary-button:hover {
+  background-color: #c0c0c0;
+}
+
+.link-button {
+  background: none;
+  border: none;
+  color: #7C90A0;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 0;
+  margin: 0;
+}
+
+.link-button:hover {
+  color: #5a6f7a;
+}
+
+.resend-code {
+  margin-top: 20px;
+}
+
+/* Add disabled button styles */
+.verify-button:disabled,
+.secondary-button:disabled,
+.link-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+
+.code-timer {
+  margin-top: 5px;
+  font-size: 14px;
+  text-align: right;
+  color: #555;
+}
+
+.time-critical {
+  color: #cc0000;
+  font-weight: bold;
+}
+
+.resend-note {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+}
+
+
+/* Add or update these styles */
+.link-button {
+  background: none;
+  border: none;
+  color: #7C90A0;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 14px;
+  padding: 5px;
+  margin: 0;
+  width: auto;
+  display: inline-block;
+}
+
+.link-button:not(:disabled):hover {
+  color: #5a6f7a;
+  text-decoration: underline;
+}
+
+/* Ensure disabled buttons show correct cursor */
+.link-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  text-decoration: none;
+}
+
+.resend-code {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.resend-note {
+  margin-top: 5px;
+  font-size: 12px;
+  color: #666;
+  font-style: italic;
+}

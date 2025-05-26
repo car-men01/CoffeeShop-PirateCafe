@@ -44,6 +44,21 @@ const User = sequelize.define('User', {
   lastLogin: {
     type: DataTypes.DATE,
     allowNull: true
+  },
+  verificationCode: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    field: 'verificationCode' // Explicitly specify the field name
+  },
+  verificationCodeExpiry: {
+    type: DataTypes.DATE,
+    allowNull: true,
+    field: 'verificationCodeExpiry' // Explicitly specify the field name
+  },
+  isVerified: {
+    type: DataTypes.BOOLEAN,
+    defaultValue: false,
+    field: 'isVerified' // Explicitly specify the field name
   }
 }, {
   timestamps: true,
@@ -60,7 +75,8 @@ const User = sequelize.define('User', {
         user.password = await bcrypt.hash(user.password, salt);
       }
     }
-  }
+  },
+  underscored: false, // Make sure this is false to use camelCase
 });
 
 User.prototype.validatePassword = async function(password) {

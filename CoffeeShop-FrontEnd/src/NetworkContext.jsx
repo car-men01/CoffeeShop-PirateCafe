@@ -876,15 +876,14 @@ export const NetworkProvider = ({ children }) => {
   const apiPut = (path, data) => safeApiCall('PUT', path, data);
   const apiDelete = (path) => safeApiCall('DELETE', path);
 
-  // Add this function to check if user is authenticated
+  // Check if user is authenticated
   const isAuthenticated = () => {
     return localStorage.getItem('authToken') !== null;
   };
 
-  // Add this function near your other helper functions
   const login = async (email, password) => {
     try {
-      const response = await axios.post(`${API_URL}/auth/login`, { email, password });
+      const response = await axios.post(`${API_URL}/auth/login-init`, { email, password });
       
       if (response.data && response.data.token) {
         // Store the token in localStorage
@@ -904,7 +903,6 @@ export const NetworkProvider = ({ children }) => {
     console.log('Token removed from localStorage');
   };
 
-  // Then include these in your context value
   return (
     <NetworkContext.Provider value={{
       isOnline,

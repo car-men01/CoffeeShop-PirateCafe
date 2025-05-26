@@ -1,4 +1,5 @@
 const express = require('express');
+require('dotenv').config();
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
@@ -23,7 +24,8 @@ const HOST = config.SERVER_HOST;
 app.use(cors({
   origin: [
     'https://coffeeshop-frontend-rust.vercel.app',
-    'https://coffeeshop-frontend-n4far1shq-carmens-projects-48a48c0c.vercel.app'
+    'https://coffeeshop-frontend-n4far1shq-carmens-projects-48a48c0c.vercel.app',
+    'http://localhost:3000'
   ],
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true

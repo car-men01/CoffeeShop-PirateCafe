@@ -1,8 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
-import { NetworkContext } from '../NetworkContext';
-
+import VerifyCode from './VerifyCode';
 import '../App.css';
 
 const Login = () => {
@@ -11,9 +10,8 @@ const Login = () => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const { login: networkLogin } = useContext(NetworkContext); // Use NetworkContext's login
-  const { login: authLogin } = useContext(AuthContext);
-  // const { login } = useContext(AuthContext);
+  
+  const { loginInit, completeAuthentication, pendingVerification, cancelVerification } = useContext(AuthContext);
   const navigate = useNavigate();
   
   const handleSubmit = async (e) => {
@@ -22,20 +20,10 @@ const Login = () => {
     setIsLoading(true);
     
     try {
-      // Use NetworkContext login first to store token
-      const networkResponse = await networkLogin(email, password);
+      // First step of login - triggers 2FA
+      await loginInit(email, password);
       
-      if (!networkResponse.data || !networkResponse.data.token) {
-        throw new Error('No token received');
-      }
-      
-      // Then use AuthContext login to update auth state with the same token
-      await authLogin(email, password, networkResponse.data);
-      
-      console.log('Login successful, user data:', networkResponse.data);
-      
-      // Navigate to homepage after successful login
-      navigate('/');
+      // The verification UI will be shown based on pendingVerification state
     } catch (err) {
       console.error('Login error:', err);
       setError(err.response?.data?.error || 'Invalid credentials');
@@ -44,10 +32,30 @@ const Login = () => {
     }
   };
 
+  const handleVerificationSuccess = (userData) => {
+    // Complete the authentication process with user data
+    completeAuthentication(userData);
+    navigate('/');
+  };
+
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
   
+  // If waiting for verification, show the verification component
+  if (pendingVerification && !pendingVerification.isRegistration) {
+    return (
+      <VerifyCode 
+        userId={pendingVerification.userId}
+        email={pendingVerification.email}
+        onSuccess={handleVerificationSuccess}
+        onCancel={cancelVerification}
+        isRegistration={false}
+      />
+    );
+  }
+  
+  // Otherwise, show the normal login form
   return (
     <div className="login-container">
       <div className="login-form">
@@ -93,7 +101,7 @@ const Login = () => {
             className="login-button"
             disabled={isLoading}
           >
-            {isLoading ? 'Logging in...' : 'Login'}
+            {isLoading ? 'Logging in...' : 'Continue'}
           </button>
         </form>
         

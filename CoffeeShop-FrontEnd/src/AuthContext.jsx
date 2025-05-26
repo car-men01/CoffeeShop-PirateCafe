@@ -10,6 +10,7 @@ export const AuthProvider = ({ children }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [pendingVerification, setPendingVerification] = useState(null);
 
   // Check for existing auth token on component mount
   useEffect(() => {
@@ -51,43 +52,69 @@ export const AuthProvider = ({ children }) => {
     checkAuth();
   }, []);
 
-  // Login function 
-  const login = async (email, password, userData = null) => {
+  // Updated login function for 2FA
+  const loginInit = async (email, password) => {
     try {
-      let response;
+      // First step of login - just validate credentials and get verification code
+      const response = await axios.post(`${API_URL}/auth/login-init`, { email, password });
       
-      if (!userData) {
-        // If no userData provided, fetch it
-        response = await axios.post(`${API_URL}/auth/login`, { email, password });
-      } else {
-        // Use the provided userData
-        response = { data: userData };
-      }
+      // Store the pending verification data
+      setPendingVerification({
+        userId: response.data.userId,
+        email: response.data.email,
+        isRegistration: false
+      });
       
-      if (response.data && response.data.token) {
-        // Store token
-        localStorage.setItem('authToken', response.data.token);
-        
-        // Update the current user state
-        setCurrentUser({
-          username: response.data.username || email.split('@')[0],
-          email: email,
-          role: response.data.role || 'user'
-        });
-        
-        // Set authentication state
-        setIsAuthenticated(true);
-        setIsAdmin(response.data.role === 'admin');
-        
-        console.log('Token stored successfully in AuthContext');
-        console.log('User role:', response.data.role);
-        console.log('isAdmin set to:', response.data.role === 'admin');
-        
-        return response;
-      }
-      throw new Error('No token received from server');
+      return response;
     } catch (error) {
-      console.error('Login error in AuthContext:', error);
+      console.error("Login initialization error:", error);
+      throw error;
+    }
+  };
+  // This is called after successful 2FA verification
+  const completeAuthentication = (userData) => {
+    if (userData && userData.token) {
+      // Set authorization header for future requests
+      axios.defaults.headers.common['Authorization'] = `Bearer ${userData.token}`;
+      
+      // Update state
+      setCurrentUser({
+        username: userData.username, 
+        email: userData.email,
+        role: userData.role || 'user',
+        id: userData.id
+      });
+      
+      setIsAuthenticated(true);
+      setIsAdmin(userData.role === 'admin');
+      
+      // Clear pending verification
+      setPendingVerification(null);
+      
+      return true;
+    }
+    return false;
+  };
+
+  // Register function updated for 2FA
+  const register = async (username, email, password) => {
+    try {
+      const response = await axios.post(`${API_URL}/auth/register`, { 
+        username, 
+        email, 
+        password 
+      });
+      
+      // Store pending verification data for registration
+      setPendingVerification({
+        userId: response.data.userId,
+        email: response.data.email,
+        isRegistration: true
+      });
+      
+      return response;
+    } catch (error) {
+      console.error("Registration error:", error);
       throw error;
     }
   };
@@ -99,23 +126,12 @@ export const AuthProvider = ({ children }) => {
     setIsAuthenticated(false);
     setIsAdmin(false);
     setCurrentUser(null);
-    console.log("User logged out");
+    setPendingVerification(null);
   };
 
-  // Register function
-  const register = async (username, email, password) => {
-    try {
-      const response = await axios.post(`${API_URL}/auth/register`, { 
-        username, 
-        email, 
-        password 
-      });
-      
-      return response;
-    } catch (error) {
-      console.error("Registration error:", error);
-      throw error;
-    }
+  // Cancel verification process
+  const cancelVerification = () => {
+    setPendingVerification(null);
   };
 
   return (
@@ -124,10 +140,13 @@ export const AuthProvider = ({ children }) => {
         isAuthenticated,
         isAdmin,
         currentUser,
-        login,
+        loginInit,
+        completeAuthentication,
         logout,
         register,
-        loading
+        loading,
+        pendingVerification,
+        cancelVerification
       }}
     >
       {children}
