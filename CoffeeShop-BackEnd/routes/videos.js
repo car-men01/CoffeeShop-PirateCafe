@@ -94,13 +94,21 @@ router.delete('/:id', async (req, res) => {
   try {
     const videoId = req.params.id;
     
+    // Check if videoId already includes the folder prefix
+    const fullVideoId = videoId.includes('pirate-cafe/videos/') 
+      ? videoId 
+      : `pirate-cafe/videos/${videoId}`;
+    
+    console.log("Attempting to delete Cloudinary resource:", fullVideoId);
+    
     // Delete the video from Cloudinary
-    await cloudinary.uploader.destroy(videoId, { resource_type: 'video' });
+    const result = await cloudinary.uploader.destroy(fullVideoId, { resource_type: 'video' });
+    console.log("Cloudinary deletion result:", result);
     
     res.status(200).json({ message: 'Video deleted successfully' });
   } catch (err) {
-    console.error('Error deleting video:', err);
-    res.status(500).json({ error: 'Failed to delete video' });
+    console.error('Error deleting video from Cloudinary:', err);
+    res.status(500).json({ error: `Failed to delete video: ${err.message}` });
   }
 });
 

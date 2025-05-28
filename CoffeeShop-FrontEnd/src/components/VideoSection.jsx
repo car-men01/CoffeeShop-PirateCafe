@@ -61,6 +61,7 @@ const VideoSection = () => {
     if (!window.confirm("Are you sure you want to delete this video?")) return;
 
     try {
+      console.log("Attempting to delete video with ID:", videoId);
       await axios.delete(`${API_URL}/videos/${videoId}`);
       setVideos(prevVideos => prevVideos.filter(video => video.id !== videoId));
       alert("Video deleted successfully.");
