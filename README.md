@@ -16,7 +16,7 @@ This project represents a website for a Coffee Shop, built using modern web tech
 - **React**: Component-based UI development
 - **React Router**: Client-side routing and navigation
 - **Axios**: API request handling
-- **Chart.js & React-ChartJS-2**: Data visualization in admin dashboard
+- **Chart.js & React-ChartJS-2**: Data visualization when generating new products
 - **CSS**: Custom responsive styling
 - **LocalStorage API**: Offline capabilities & state persistence
 - **JWT**: Secure authentication mechanism
@@ -45,7 +45,7 @@ This project represents a website for a Coffee Shop, built using modern web tech
 
 ### User Authentication & Authorization
 - **Registration & Login**: Users can register and log in securely.
-- **Two-Factor Authentication**: Enhanced security with verification codes.
+- **Two-Factor Authentication**: Enhanced security with verification codes sent via email.
 - **Role-Based Access Control**: Different permissions for users and admins.
 
 ### CRUD Operations
@@ -82,6 +82,25 @@ This project represents a website for a Coffee Shop, built using modern web tech
 3. **Add Product Page**: Form to add new products to the catalog.
 4. **Product Detail Page**: Comprehensive product information with update/delete options.
 5. **Admin Dashboard**: Administrative tools and monitoring capabilities (restricted access).
+
+---
+
+## 💻 Usage Flow
+
+- **Browse the Menu**: View all products with filtering options.
+- **Product Management**: Add, update, or delete products (requires authentication).
+- **Account Management**: Register, log in, and manage your profile.
+- **Administrative Tools**: Access monitoring dashboard (admin users only).
+
+---
+
+## 📊 Admin Features
+
+Administrators have access to:
+- **Comprehensive User Activity Monitoring**: Track user actions and behaviors.
+- **Statistical Visualizations**: View detailed charts and graphs of site usage.
+- **User Management Tools**: Manage user accounts and permissions.
+- **Security Alert Configuration**: Simulate and monitor suspicious activities.
 
 ---
 
@@ -136,22 +155,3 @@ The Pirate Café application is deployed using modern cloud platforms to ensure 
 ## 🛠️ Project Structure
 
 . ├── .gitignore ├── docker-compose.yml ├── package.json ├── README.md ├── CoffeeShop-BackEnd/ │ ├── models/ # Database models │ ├── routes/ # API endpoints │ ├── middleware/ # Express middleware │ ├── utils/ # Utility functions │ ├── tests/ # Backend tests │ └── server.js # Main server entry point └── CoffeeShop-FrontEnd/ ├── src/ │ ├── components/ # React components │ ├── contexts/ # Context providers │ ├── assets/ # Images and static files │ └── App.js # Main application component ├── public/ # Static assets └── index.html # HTML entry point
-
----
-
-## 💻 Usage Flow
-
-- **Browse the Menu**: View all products with filtering options.
-- **Product Management**: Add, update, or delete products (requires authentication).
-- **Account Management**: Register, log in, and manage your profile.
-- **Administrative Tools**: Access monitoring dashboard (admin users only).
-
----
-
-## 📊 Admin Features
-
-Administrators have access to:
-- **Comprehensive User Activity Monitoring**: Track user actions and behaviors.
-- **Statistical Visualizations**: View detailed charts and graphs of site usage.
-- **User Management Tools**: Manage user accounts and permissions.
-- **Security Alert Configuration**: Simulate and monitor suspicious activities.
