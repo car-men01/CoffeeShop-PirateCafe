@@ -68,62 +68,59 @@ const VideoSection = () => {
   };
 
   const handleFileUpload = async (event) => {
-    const file = event.target.files[0];
-    if (!file) return;
+  const file = event.target.files[0];
+  if (!file) return;
 
-    // Check if file is a video
-    if (!file.type.includes('video/')) {
-      alert('Please select a video file.');
-      return;
-    }
+  // Check if file is a video
+  if (!file.type.includes('video/')) {
+    alert('Please select a video file.');
+    return;
+  }
 
-    // Check file size (max 2GB for browser safety)
-    if (file.size > 2 * 1024 * 1024 * 1024) {
-      alert('Video file is too large. Maximum size is 2GB.');
-      return;
-    }
+  // Check file size (100MB for Cloudinary free tier)
+  if (file.size > 100 * 1024 * 1024) {
+    alert('File size exceeds 100MB. Please select a smaller file.');
+    return;
+  }
 
-    setIsUploading(true);
-    setUploadProgress(0);
+  setIsUploading(true);
+  setUploadProgress(0);
 
-    // Create form data
-    const formData = new FormData();
-    formData.append('video', file);
-    formData.append('title', file.name.replace(/\.[^/.]+$/, "")); // Remove extension for title
+  // Use FormData to send the file
+  const formData = new FormData();
+  formData.append('video', file);
+  formData.append('title', file.name.split('.')[0]); // Use filename without extension as title
 
-    try {
-      // Upload with progress
-      const response = await axios.post(`${API_URL}/videos/upload`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        },
-        onUploadProgress: (progressEvent) => {
-          const percentCompleted = Math.round(
-            (progressEvent.loaded * 100) / progressEvent.total
-          );
-          setUploadProgress(percentCompleted);
+  try {
+    // Simulate progress since actual progress from Cloudinary isn't available directly
+    const progressInterval = setInterval(() => {
+      setUploadProgress(prev => {
+        if (prev >= 95) {
+          clearInterval(progressInterval);
+          return 95;
         }
+        return prev + 5;
       });
+    }, 500);
 
-      // After successful upload
-      alert('Video uploaded successfully!');
-      
-      // Refresh videos list from server
-      fetchVideos();
-      
-      // Navigate to the last page after a short delay to ensure videos are loaded
-      setTimeout(() => {
-        const totalPages = Math.ceil((videos.length + 1) / videosPerPage);
-        setCurrentPage(totalPages);
-      }, 1000);
-    } catch (error) {
-      console.error('Error uploading video:', error);
-      alert('Failed to upload video. Please try again.');
-    } finally {
-      setIsUploading(false);
-      setUploadProgress(0);
-    }
-  };
+    // Send to backend which will upload to Cloudinary
+    const response = await axios.post(`${API_URL}/videos/upload`, formData);
+    clearInterval(progressInterval);
+    setUploadProgress(100);
+
+    // Add new video to the list
+    setVideos(prevVideos => [response.data, ...prevVideos]);
+    
+    // Reset form and state
+    setIsUploading(false);
+    event.target.value = '';
+  } catch (err) {
+    console.error('Error uploading video:', err);
+    setIsUploading(false);
+    setUploadProgress(0);
+    alert('Failed to upload video. Please try again.');
+  }
+};
 
   // Pagination
   const indexOfLastVideo = currentPage * videosPerPage;

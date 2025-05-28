@@ -33,8 +33,8 @@ app.use(cors({
 
 // Set up static file serving
 app.use('/assets', express.static(path.join(__dirname, 'data/assets')));
-app.use('/videos', express.static(path.join(__dirname, 'public/videos')));
-app.use('/videos/thumbnails', express.static(path.join(__dirname, 'public/videos/thumbnails')));
+// app.use('/videos', express.static(path.join(__dirname, 'public/videos')));
+// app.use('/videos/thumbnails', express.static(path.join(__dirname, 'public/videos/thumbnails')));
 
 // Set up all routes
 app.use('/products', productRoutes);
