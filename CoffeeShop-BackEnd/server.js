@@ -28,9 +28,12 @@ app.use(cors({
     'http://localhost:3000'
   ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  credentials: true,
-  allowedHeaders: ['Content-Type', 'Authorization']
+  credentials: true
 }));app.use(bodyParser.json());
+
+// For larger file uploads
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 
 // Set up static file serving
 app.use('/assets', express.static(path.join(__dirname, 'data/assets')));

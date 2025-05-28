@@ -65,6 +65,13 @@ router.post('/upload', upload.single('video'), async (req, res) => {
     if (!req.file) {
       return res.status(400).json({ error: 'No video file provided' });
     }
+    
+    console.log("File received:", {
+      originalname: req.file.originalname,
+      size: req.file.size,
+      mimetype: req.file.mimetype,
+      path: req.file.path
+    });
 
     // Cloudinary automatically generates thumbnails for videos
     const thumbnailUrl = cloudinary.url(req.file.filename, {
@@ -82,10 +89,16 @@ router.post('/upload', upload.single('video'), async (req, res) => {
       size: `${Math.round(req.file.size / (1024 * 1024))} MB`
     };
     
+    console.log("Video successfully uploaded to Cloudinary:", video);
     res.status(201).json(video);
   } catch (err) {
     console.error('Error uploading video to Cloudinary:', err);
-    res.status(500).json({ error: 'Failed to upload video' });
+    const errorMessage = err.message || 'Unknown error';
+    res.status(500).json({ 
+      error: 'Failed to upload video',
+      details: errorMessage,
+      stack: process.env.NODE_ENV === 'development' ? err.stack : undefined
+    });
   }
 });
 
