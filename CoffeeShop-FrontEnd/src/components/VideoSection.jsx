@@ -57,6 +57,19 @@ const VideoSection = () => {
     }
   };
 
+  const handleDelete = async (videoId) => {
+    if (!window.confirm("Are you sure you want to delete this video?")) return;
+
+    try {
+      await axios.delete(`${API_URL}/videos/${videoId}`);
+      setVideos(prevVideos => prevVideos.filter(video => video.id !== videoId));
+      alert("Video deleted successfully.");
+    } catch (err) {
+      console.error("Error deleting video:", err);
+      alert("Failed to delete video. Please try again.");
+    }
+  };
+
   const handleDownload = (videoUrl, fileName) => {
     // Create an anchor element and trigger download
     const anchor = document.createElement('a');
@@ -182,6 +195,12 @@ const VideoSection = () => {
                   onClick={() => handleDownload(video.url, `${video.title}.mp4`)}
                 >
                   <FaDownload /> Download
+                </button>
+                <button 
+                  className="delete-video-button"
+                  onClick={() => handleDelete(video.id)}
+                >
+                  Delete
                 </button>
               </div>
             </div>
