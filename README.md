@@ -150,8 +150,4 @@ The Pirate Café application is deployed using modern cloud platforms to ensure 
 - Ensure that the front-end is configured to use the correct API URL (`https://coffeeshop-backend.onrender.com`) in the `API_URL` environment variable.
 - The application is fully functional and accessible from any device with an internet connection.
 
----
 
-## 🛠️ Project Structure
-
-. ├── .gitignore ├── docker-compose.yml ├── package.json ├── README.md ├── CoffeeShop-BackEnd/ │ ├── models/ # Database models │ ├── routes/ # API endpoints │ ├── middleware/ # Express middleware │ ├── utils/ # Utility functions │ ├── tests/ # Backend tests │ └── server.js # Main server entry point └── CoffeeShop-FrontEnd/ ├── src/ │ ├── components/ # React components │ ├── contexts/ # Context providers │ ├── assets/ # Images and static files │ └── App.js # Main application component ├── public/ # Static assets └── index.html # HTML entry point
