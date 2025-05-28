@@ -56,18 +56,25 @@ const VideoSection = () => {
       ]);
     }
   };
-
+  
   const handleDelete = async (videoId) => {
     if (!window.confirm("Are you sure you want to delete this video?")) return;
 
     try {
       console.log("Attempting to delete video with ID:", videoId);
-      await axios.delete(`${API_URL}/videos/${videoId}`);
+      
+      // Encode the videoId to handle special characters like slashes
+      const encodedVideoId = encodeURIComponent(videoId);
+      
+      // Make sure API_URL doesn't have a trailing slash
+      const apiUrl = API_URL.endsWith('/') ? API_URL.slice(0, -1) : API_URL;
+      
+      await axios.delete(`${apiUrl}/videos/${encodedVideoId}`);
       setVideos(prevVideos => prevVideos.filter(video => video.id !== videoId));
       alert("Video deleted successfully.");
     } catch (err) {
       console.error("Error deleting video:", err);
-      alert("Failed to delete video. Please try again.");
+      alert(`Failed to delete video: ${err.message || "Unknown error"}. Please try again.`);
     }
   };
 

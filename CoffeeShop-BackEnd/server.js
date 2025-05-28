@@ -27,8 +27,9 @@ app.use(cors({
     'https://coffeeshop-frontend-n4far1shq-carmens-projects-48a48c0c.vercel.app',
     'http://localhost:3000'
   ],
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  credentials: true
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  credentials: true,
+  allowedHeaders: ['Content-Type', 'Authorization']
 }));app.use(bodyParser.json());
 
 // Set up static file serving

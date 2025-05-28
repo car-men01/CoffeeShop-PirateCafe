@@ -92,7 +92,10 @@ router.post('/upload', upload.single('video'), async (req, res) => {
 // Delete video endpoint
 router.delete('/:id', async (req, res) => {
   try {
-    const videoId = req.params.id;
+    // Decode the ID from the URL
+    const videoId = decodeURIComponent(req.params.id);
+    
+    console.log("Raw video ID from request:", videoId);
     
     // Check if videoId already includes the folder prefix
     const fullVideoId = videoId.includes('pirate-cafe/videos/') 
