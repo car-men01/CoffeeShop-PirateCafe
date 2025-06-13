@@ -158,28 +158,38 @@ const AdminWallets = () => {
           {userWallets.length === 0 ? (
             <p>No user wallets found.</p>
           ) : (
-            <div className="wallets-table">
-              <table>
-                <thead>
-                  <tr>
-                    <th>User</th>
-                    <th>Email</th>
-                    <th>Balance</th>
-                    <th>Last Updated</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {userWallets.map(wallet => (
-                    <tr key={wallet.user_id}>
-                      <td>{wallet.username}</td>
-                      <td>{wallet.email}</td>
-                      <td className="balance-cell">{formatCurrency(wallet.balance)}</td>
-                      <td>{formatDate(wallet.updated_at)}</td>
+            <>
+              <div className="wallets-count">
+                Showing {userWallets.length} user{userWallets.length !== 1 ? 's' : ''}
+              </div>
+              <div className="wallets-table">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>User</th>
+                      <th>Email</th>
+                      <th>Balance</th>
+                      <th>Last Updated</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {userWallets.map(wallet => (
+                      <tr key={wallet.user_id}>
+                        <td>{wallet.username}</td>
+                        <td>{wallet.email}</td>
+                        <td className="balance-cell">{formatCurrency(wallet.balance)}</td>
+                        <td>{formatDate(wallet.updated_at)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              {userWallets.length > 5 && (
+                <div className="scroll-hint">
+                  💡 Scroll within the table to view all users
+                </div>
+              )}
+            </>
           )}
         </div>
       )}
