@@ -2,6 +2,7 @@
 
 .admin-wallets-container {
   width: 100%;
+  min-height: calc(100vh - 80px); /* Make page longer to fit table better */
   margin: 0;
   padding: 20px;
   background-color: #ECE0C7; /* Changed to match app theme */
@@ -315,6 +316,31 @@
   height: 500px; /* Set consistent height */
 }
 
+/* Custom red scrollbar for wallets table */
+.wallets-table::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+.wallets-table::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 6px;
+}
+
+.wallets-table::-webkit-scrollbar-thumb {
+  background: #660000;
+  border-radius: 6px;
+  border: 2px solid #f1f1f1;
+}
+
+.wallets-table::-webkit-scrollbar-thumb:hover {
+  background: #4a0000;
+}
+
+.wallets-table::-webkit-scrollbar-corner {
+  background: #f1f1f1;
+}
+
 .wallets-table table {
   width: 100%;
   border-collapse: collapse;
@@ -461,8 +487,7 @@
   
   /* Mobile container adjustments */
   .admin-wallets-container {
-    min-height: calc(100vh - 120px);
-    max-height: calc(100vh - 120px);
+    min-height: calc(100vh - 100px); /* Adjusted for mobile */
     padding: 15px;
   }
 }
