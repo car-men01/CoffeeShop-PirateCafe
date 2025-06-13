@@ -267,9 +267,9 @@ const AdminOrders = () => {
             </div>
           )}
 
-          <div className="orders-summary">
+          {/* <div className="orders-summary">
             <p>Total orders: {pagination.totalOrders}</p>
-          </div>
+          </div> */}
         </>
       )}
     </div>
