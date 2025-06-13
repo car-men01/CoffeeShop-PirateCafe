@@ -4,11 +4,30 @@
     "supertest": "^7.1.0"
   },
   "dependencies": {
+    "axios": "^1.9.0",
     "bcrypt": "^5.1.0",
     "jsonwebtoken": "^9.0.0",
     "node-cache": "^5.1.2",
     "react-icons": "^5.5.0",
     "react-virtualized-auto-sizer": "^1.0.26",
     "react-window": "^1.8.11"
-  }
+  },
+  "name": "coffeeshop-piratecafe",
+  "version": "1.0.0",
+  "description": "Pirate Café is a full-stack web application for a pirate-themed coffee shop. It provides an interactive platform for customers to browse the menu and offers administrative tools for managing products and monitoring user activity.",
+  "main": "chatbot-demo.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/car-men01/CoffeeShop-PirateCafe.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/car-men01/CoffeeShop-PirateCafe/issues"
+  },
+  "homepage": "https://github.com/car-men01/CoffeeShop-PirateCafe#readme"
 }

@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
 import VerifyCode from './VerifyCode';
-import '../App.css';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import '../styles/Login.css';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -54,11 +55,10 @@ const Login = () => {
       />
     );
   }
-  
-  // Otherwise, show the normal login form
+    // Otherwise, show the normal login form
   return (
     <div className="login-container">
-      <div className="login-form">
+      <div className="login-form centered-login-form">
         <h2>Login to Pirate Café</h2>
         
         {error && <div className="error-message">{error}</div>}
@@ -67,7 +67,7 @@ const Login = () => {
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
-              type="email"
+              type="email"  
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -84,14 +84,13 @@ const Login = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-              />
-              <button 
+              />              <button 
                 type="button"
                 className="password-toggle-btn"
                 onClick={togglePasswordVisibility}
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
-                {showPassword ? '👁️' : '👁️‍🗨️'}
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
           </div>

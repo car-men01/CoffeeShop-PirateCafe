@@ -1,0 +1,195 @@
+/* Register Styles */
+
+.register-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+  background-color: #ECE0C7;
+}
+
+.register-form {
+  width: 100%;
+  max-width: 400px; /* Match login form max-width */
+  padding: 30px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.register-form h2 {
+  margin-bottom: 20px;
+  color: #7C90A0;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch; /* Stretch to fill width */
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+  font-weight: 500;
+  width: 100%;
+  text-align: center; /* Center the labels */
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+/* Make password input containers have space for the eye button */
+.password-input-container input {
+  padding-right: 45px; /* Add space for the eye button */
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #7C90A0;
+}
+
+.password-input-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  padding: 0;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+  z-index: 10;
+}
+
+.password-toggle-btn:hover {
+  color: #7C90A0;
+}
+
+.password-toggle-btn:focus {
+  outline: none;
+}
+
+.register-button {
+  width: 80%; /* Reduced from 100% to make button smaller */
+  max-width: 300px; /* Set a maximum width */
+  padding: 12px;
+  background-color: #7C90A0;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 0 auto; /* Center the button */
+}
+
+.register-button:hover {
+  background-color: #5a6f7a;
+}
+
+.register-button:disabled {
+  background-color: #a0a0a0;
+  cursor: not-allowed;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 10px;
+  border-radius: 4px;
+  margin-bottom: 15px;
+  border: 1px solid #f5c6cb;
+}
+
+.login-link {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.login-link p {
+  color: #000; /* Make the text black */
+  margin: 0;
+}
+
+.login-link a {
+  color: #7C90A0;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+/* Ensure consistent form element alignment */
+.register-form form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center; /* Center all form elements */
+}
+
+/* Ensure all form inputs and buttons have consistent width */
+.register-form .form-group,
+.register-form .register-button,
+.register-form .login-link {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Make sure input containers match their own width, button has its own width */
+.register-form .form-group input,
+.register-form .password-input-container {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.register-form .register-button {
+  width: 80%; /* Button is smaller than inputs */
+  max-width: 300px;
+  box-sizing: border-box;
+}
+
+/* Center the form content */
+.centered-register-form {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 400px; /* Match login form */
+}
+
+/* Responsive design for mobile */
+@media (max-width: 480px) {
+  .register-form {
+    max-width: 95%;
+    padding: 20px;
+  }
+  
+  .register-form h2 {
+    font-size: 1.5rem;
+  }
+}

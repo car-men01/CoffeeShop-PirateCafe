@@ -4,6 +4,7 @@ import axios from 'axios';
 import { AuthContext } from '../AuthContext';
 import { NetworkContext } from '../NetworkContext';
 import { useNavigate } from 'react-router-dom';
+import '../styles/AdminDashboard.css';
 
 const AdminDashboard = () => {
   const [monitoredUsers, setMonitoredUsers] = useState([]);

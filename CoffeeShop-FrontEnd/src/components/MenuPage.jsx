@@ -3,8 +3,11 @@ import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { NetworkContext } from "../NetworkContext";
 import { ProductContext } from "../ProductContext";
+import { AuthContext } from "../AuthContext";
+import { cartService } from "../services/cartService";
 import { API_URL, WEBSOCKET_URL, IMAGES_BASE_URL } from "../config";
 import axios from "axios";
+import '../styles/MenuPage.css';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -486,7 +489,40 @@ const MenuPage = () => {
     const [isGenerating, setIsGenerating] = useState(false);
     const [generatedCount, setGeneratedCount] = useState(0);
     const [connectionStatus, setConnectionStatus] = useState('disconnected');
-    const { isOnline, isServerUp, pendingOperations, isSyncing, syncPendingOperations, apiGet } = useContext(NetworkContext);    const { isOffline } = useContext(ProductContext);
+    const { isOnline, isServerUp, pendingOperations, isSyncing, syncPendingOperations, apiGet } = useContext(NetworkContext);
+    const { isOffline } = useContext(ProductContext);
+    const { isAuthenticated, currentUser } = useContext(AuthContext);
+
+    // Cart state
+    const [cartItems, setCartItems] = useState(0);
+    
+    // Add to cart function
+    const handleAddToCart = async (productId, productName) => {
+        if (!isAuthenticated) {
+            alert('Please log in to add items to cart');
+            navigate('/login');
+            return;
+        }
+
+        if (currentUser?.role === 'admin') {
+            alert('Admins cannot add items to cart');
+            return;
+        }        try {
+            await cartService.addToCart(productId, 1);
+            alert(`${productName} added to cart!`);
+            
+            // Dispatch event to update cart count in navbar
+            window.dispatchEvent(new Event('cartUpdated'));
+        } catch (error) {
+            console.error('Error adding to cart:', error);
+            if (error.response?.status === 401) {
+                alert('Please log in to add items to cart');
+                navigate('/login');
+            } else {
+                alert('Failed to add item to cart. Please try again.');
+            }
+        }
+    };
 
     // for endless scrolling
     const [loadedPages, setLoadedPages] = useState(1);
@@ -1445,8 +1481,7 @@ const MenuPage = () => {
                                             {product._isOffline && (
                                                 <span className="product-offline-indicator">Offline</span>
                                             )}
-                                            
-                                            <Link to={`/product/${encodeURIComponent(product.id)}`} className="product-link">
+                                              <Link to={`/product/${encodeURIComponent(product.id)}`} className="product-link">
                                                 <LazyImage 
                                                     src={product.image.startsWith('http') ? product.image : `${IMAGES_BASE_URL}${product.image}`} 
                                                     alt={product.name}
@@ -1463,6 +1498,33 @@ const MenuPage = () => {
                                                     </div>
                                                 </div>
                                             </Link>
+                                            {/* Add to Cart Button - only show for non-admin users */}
+                                            {isAuthenticated && currentUser?.role !== 'admin' && (
+                                                <button 
+                                                    className="add-to-cart-btn"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        e.stopPropagation();
+                                                        handleAddToCart(product.id, product.name);
+                                                    }}
+                                                    style={{
+                                                        margin: '10px',
+                                                        padding: '8px 16px',
+                                                        backgroundColor: '#7C90A0',
+                                                        color: 'white',
+                                                        border: 'none',
+                                                        borderRadius: '5px',
+                                                        cursor: 'pointer',
+                                                        fontSize: '14px',
+                                                        fontWeight: 'bold',
+                                                        transition: 'background-color 0.3s'
+                                                    }}
+                                                    onMouseOver={(e) => e.target.style.backgroundColor = '#5a6f7a'}
+                                                    onMouseOut={(e) => e.target.style.backgroundColor = '#7C90A0'}
+                                                >
+                                                    Add to Cart
+                                                </button>
+                                            )}
                                         </div>
                                     ))}
                                     </div>

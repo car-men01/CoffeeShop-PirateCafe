@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { FaDownload, FaUpload } from "react-icons/fa";
 import { API_URL } from "../config";
+import '../styles/VideoSection.css';
 
 const VideoSection = () => {
   const [videos, setVideos] = useState([]);
@@ -194,22 +195,22 @@ const VideoSection = () => {
                     e.target.poster = "https://storage.googleapis.com/gtv-videos-bucket/sample/images/BigBuckBunny.jpg";
                   }}
                 ></video>
-              </div>
-              <div className="video-info">
-                <h3>{video.title}</h3>
+              </div>              <div className="video-info">
                 <p>Size: {video.size}</p>
-                <button 
-                  className="download-button"
-                  onClick={() => handleDownload(video.url, `${video.title}.mp4`)}
-                >
-                  <FaDownload /> Download
-                </button>
-                <button 
-                  className="delete-video-button"
-                  onClick={() => handleDelete(video.id)}
-                >
-                  Delete
-                </button>
+                <div className="video-actions">
+                  <button 
+                    className="download-button"
+                    onClick={() => handleDownload(video.url, `${video.title}.mp4`)}
+                  >
+                    <FaDownload /> Download
+                  </button>
+                  <button 
+                    className="delete-video-button"
+                    onClick={() => handleDelete(video.id)}
+                  >
+                    Delete
+                  </button>
+                </div>
               </div>
             </div>
           ))

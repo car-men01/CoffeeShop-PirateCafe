@@ -1,6 +1,7 @@
 import React from "react";
 import add_product_image from "../assets/add_product_main.jpg"; // Replace with your image
 import { useNavigate } from "react-router-dom";
+import '../styles/AddProductSection.css';
 
 const AddProductSection = () => {
   const navigate = useNavigate();

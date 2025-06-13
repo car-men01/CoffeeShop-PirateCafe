@@ -6,10 +6,14 @@ const path = require('path');
 const productRoutes = require('./routes/products');
 const videosRoutes = require('./routes/videos');
 const analyticsRoutes = require('./routes/analytics');
-const config = require('./config');
-const sequelize = require('./models/index');
 const authRoutes = require('./routes/auth');
 const adminRoutes = require('./routes/admin');
+const cartRoutes = require('./routes/cart');
+const orderRoutes = require('./routes/orders');
+const walletRoutes = require('./routes/wallet');
+const chatbotRoutes = require('./routes/chatbot');
+const config = require('./config');
+const sequelize = require('./models/index');
 const { startMonitoring } = require('./utils/userMonitoring');
 // const { server: wsServer, generatedProducts } = require('./websocketServer');
 const { server: wsHttpServer } = require('./websocketServer');
@@ -46,6 +50,10 @@ app.use('/videos', videosRoutes);
 app.use('/analytics', analyticsRoutes);
 app.use('/auth', authRoutes);
 app.use('/admin', adminRoutes);
+app.use('/cart', cartRoutes);
+app.use('/orders', orderRoutes);
+app.use('/api/wallet', walletRoutes);
+app.use('/api/chatbot', chatbotRoutes);
 
 // Start the user monitoring service
 startMonitoring();

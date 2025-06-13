@@ -5,6 +5,7 @@ import coverAdd from "../assets/add_product_cover.jpg";
 import coverImg from "../assets/add_product_main.jpg";
 import { NetworkContext } from "../NetworkContext";
 import { API_URL, IMAGES_BASE_URL } from "../config";
+import '../styles/AddPage.css';
 
 const AddPage = () => {
     const navigate = useNavigate();
@@ -215,7 +216,7 @@ const AddPage = () => {
                       required 
                     ></textarea>
 
-                    <button id="submit" type="submit" className="submit-btn">Submit</button>
+                    <button id="submit" type="submit" className="submit-add-btn">Submit</button>
                 </form>
 
                 <div className="form-message">

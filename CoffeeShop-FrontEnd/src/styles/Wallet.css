@@ -1,0 +1,297 @@
+/* Wallet Styles - Website Color Scheme */
+
+.wallet-page {
+  height: 100vh; /* Full viewport height */
+  background-color: #ECE0C7; /* Cream background */
+  padding: 30px 20px 40px; /* Reduced top padding */
+  position: relative;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.wallet-container {
+  /* max-width: 1200px; */
+  margin: 0;
+  width: 100%;
+  position: relative;
+  height: 100%;
+}
+
+.wallet-header {
+  text-align: center;
+  margin-bottom: 30px; /* Reduced margin to move title up */
+}
+
+.wallet-header h2 {
+  color: #660000; /* Dark red color for "My Wallet" */
+  font-size: 2.5rem; /* Smaller font size */
+  font-weight: 700;
+  margin: 0 0 10px 0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* Balance Display - Card Style */
+.balance-display {
+  background: white;
+  border-radius: 15px;
+  padding: 25px; /* Smaller padding */
+  text-align: center;
+  margin-bottom: 30px; /* Reduced margin */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 2px solid #7C90A0;
+  position: relative;
+  max-width: 90%; /* Smaller box */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Removed the blue line at the top */
+/* .balance-display::before removed */
+
+.balance-amount {
+  font-size: 2rem; /* Smaller font size */
+  font-weight: 800;
+  color: black; /* Black color for the money amount */
+  margin: 15px 0 8px 0; /* Reduced margins */
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.balance-label {
+  font-size: 1rem; /* Smaller font size */
+  color: #7C90A0; /* Light blue */
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* Wallet Actions */
+.wallet-actions {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  text-align: center;
+}
+
+.add-funds-section {
+  background: white;
+  border-radius: 15px;
+  padding: 40px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border: 2px solid #7C90A0;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.add-funds-section h3 {
+  color: black;
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 0 0 30px 0;
+  text-align: center;
+  position: relative;
+}
+
+.add-funds-section h3::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 120px; /* Longer line */
+  height: 3px;
+  background: #7C90A0;
+  border-radius: 2px;
+}
+
+/* Quick Amount Buttons - Single Row */
+.quick-amounts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns in one row */
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.quick-amount-btn {
+  background: #888888; /* Gray color instead of red */
+  border: 2px solid #888888;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.quick-amount-btn:hover {
+  background: #666666; /* Darker gray on hover */
+  border-color: #666666;
+  transform: translateY(-2px);
+}
+
+.quick-amount-btn.selected {
+  background: #7C90A0; /* Light blue when selected */
+  color: white;
+  border-color: #7C90A0;
+  transform: translateY(-2px);
+}
+
+/* Form Styling - Centered */
+.add-funds-form {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  align-items: center; /* Center the form elements */
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 300px; /* Limit width for better centering */
+  align-items: center; /* Center align content */
+  text-align: center;
+}
+
+.form-group label {
+  font-weight: 600;
+  color: black;
+  font-size: 1.1rem;
+  text-align: center; /* Center the Amount text */
+}
+
+.form-group input {
+  padding: 15px 20px;
+  border: 2px solid #7C90A0;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  background: white;
+  color: black;
+  text-align: center; /* Center the input text */
+  width: 250px; /* Fixed width */
+}
+
+
+.add-funds-btn {
+  color: white;
+  padding: 30px 100px; /* Much bigger and longer button */
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.8rem; /* Larger font */
+  font-weight: 600;
+  transition: all 0.3s ease;
+  position: relative;
+  margin-top: 20px;
+  min-width: 350px; /* Ensure minimum width */
+}
+
+.add-funds-btn:hover {
+  transform: translateY(-2px);
+  /* Removed the red shadow */
+}
+
+.add-funds-btn:active {
+  transform: translateY(0);
+}
+
+.add-funds-btn:disabled {
+  background: #bdc3c7;
+  border-color: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* Messages */
+.error-message {
+  background: #FCE1E5; /* Light red background */
+  color: #C21F39; /* Dark red text */
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: 2px solid #F6C6CE; /* Medium red border */
+}
+
+.success-message {
+  background: #d4edda;
+  color: #155724;
+  padding: 15px 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  border: 2px solid #c3e6cb;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .wallet-page {
+    padding: 60px 15px 30px;
+  }
+  
+  .wallet-header h2 {
+    font-size: 2rem;
+  }
+  
+  .balance-display {
+    padding: 20px 15px;
+    margin-bottom: 25px;
+  }
+  
+  .balance-amount {
+    font-size: 2rem;
+  }
+  
+  .add-funds-section {
+    padding: 25px 15px;
+  }
+  
+  .quick-amounts {
+    grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+    gap: 12px;
+  }
+  
+  .quick-amount-btn {
+    padding: 16px;
+    font-size: 1.1rem;
+  }
+  
+  .add-funds-btn {
+    padding: 20px 45px;
+    font-size: 1.2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .wallet-header h2 {
+    font-size: 1.8rem;
+  }
+  
+  .balance-amount {
+    font-size: 1.8rem;
+  }
+  
+  .balance-display {
+    padding: 20px 10px;
+  }
+  
+  .add-funds-section {
+    padding: 20px 10px;
+  }
+  
+  .add-funds-section h3 {
+    font-size: 1.5rem;
+  }
+  
+  .quick-amounts {
+    grid-template-columns: 1fr; /* Single column on very small screens */
+  }
+  
+  .add-funds-btn {
+    padding: 18px 35px;
+    font-size: 1.1rem;
+  }
+}
+

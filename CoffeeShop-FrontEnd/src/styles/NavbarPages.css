@@ -1,0 +1,179 @@
+/* NavbarPages Styles */
+
+.navbar-pages {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  z-index: 1000;
+  width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  height: 80px; /* Fixed height to prevent layout shift */
+}
+
+.logo-pages {
+  color: #7C90A0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+.navbar-center {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.navbar-center ul {
+  display: flex;
+  list-style: none;
+  gap: 20px;
+  padding: 0;
+  margin: 0;
+}
+
+.navbar-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar-right ul {
+  display: flex;
+  list-style: none;
+  gap: 15px;
+  padding: 0;
+  margin: 0;
+}
+
+.nav-btn {
+  background-color: #1a1a1a;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.25s;
+}
+
+.nav-btn:hover {
+  background-color: #333;
+  border-color: #646cff;
+}
+
+.user-dropdown-btn {
+  background-color: #7C90A0;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.25s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.user-dropdown-btn:hover {
+  background-color: #5a6f7a;
+}
+
+/* Remove the old user greeting positioning */
+.navbar-pages .user-greeting {
+  display: none;
+}
+
+.user-greeting {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #333;
+  font-weight: 500;
+  font-size: 2rem;
+  color: #4a0000;
+  cursor: pointer;
+}
+
+.navbar, .navbar-pages {
+  position: relative; /* Ensure position relative for absolute positioning to work */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Add this to ensure proper spacing for the right-side buttons */
+.navbar ul, .navbar-pages ul {
+  display: flex;
+  list-style: none;
+  gap: 15px;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-btn, .logout-btn, .login-btn, .cart-btn, .orders-btn, .admin-orders-btn, .wallet-btn, .admin-wallet-btn{
+  background-color: #1a1a1a;
+  color: white;
+  padding: 0.6em 1.2em;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: 500;
+  transition: all 0.25s;
+}
+
+.admin-btn:hover, .logout-btn:hover, .login-btn:hover, .cart-btn:hover, .orders-btn:hover, .admin-orders-btn:hover, .wallet-btn:hover, .admin-wallet-btn:hover {
+  border-color: #646cff;
+}
+
+.logout-btn {
+  background-color: #f5222d;
+}
+
+.logout-btn:hover {
+  background-color: #cf1322;
+  border-color: #cf1322;
+}
+
+/* Remove specific color overrides for cart and orders buttons */
+.cart-count {
+  color: #000;
+  font-weight: bold;
+  margin-left: 5px;
+}
+
+.admin-orders-btn {
+  background-color: #fa8c16;
+}
+
+.admin-orders-btn:hover {
+  background-color: #d46b08;
+}
+
+/* Ensure login button styling matches */
+.login-btn {
+  background-color: #7C90A0;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: all 0.25s;
+}
+
+.login-btn:hover {
+  background-color: #5a6f7a;
+}

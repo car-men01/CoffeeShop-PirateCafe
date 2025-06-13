@@ -1,0 +1,162 @@
+/* Footer Styles */
+
+.footer {
+  background-color: white;
+  color: #333;
+  height: 80px; /* Same height as navbar */
+  display: flex;
+  align-items: center;
+  margin-top: 0; /* Remove auto margin that could cause black space */
+  font-family: 'Georgia', serif;
+  border-top: 1px solid #e0e0e0;
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0; /* Prevent footer from shrinking */
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 40px;
+  height: 100%;
+}
+
+.footer-section {
+  display: flex;
+  align-items: center;
+}
+
+.brand-section {
+  flex: 1;
+  text-align: left;
+}
+
+.footer-brand-line {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.footer-logo {
+  font-size: 1.2rem;
+  color: #660000;
+}
+
+.footer-brand h3 {
+  font-size: 1.3rem;
+  color: #660000;
+  margin: 0;
+  font-weight: bold;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.footer-description {
+  color: #666;
+  line-height: 1.4;
+  margin: 0;
+  font-style: italic;
+  font-size: 0.85rem;
+  max-width: 500px;
+}
+
+.links-section {
+  flex: 0 0 auto;
+  min-width: 80px;
+}
+
+.footer-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.footer-links li {
+  margin: 0;
+}
+
+.footer-links a {
+  color: #333;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.footer-links a:hover {
+  color: #7C90A0;
+  text-decoration: underline;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .footer {
+    height: auto;
+    padding: 15px 0;
+  }
+  
+  .footer-content {
+    flex-direction: column;
+    gap: 15px;
+    text-align: center;
+    align-items: center;
+  }
+  
+  .footer-brand-line {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+  
+  .footer-brand {
+    justify-content: center;
+  }
+  
+  .footer-links {
+    flex-direction: row;
+    gap: 15px;
+    justify-content: center;
+  }
+  
+  .footer-description {
+    font-size: 0.8rem;
+    max-width: 300px;
+    margin: 0 auto;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-container {
+    padding: 0 15px;
+  }
+  
+  .footer-brand h3 {
+    font-size: 1.1rem;
+  }
+  
+  .footer-description {
+    font-size: 0.75rem;
+  }
+  
+  .footer-links {
+    flex-direction: column;
+    gap: 8px;
+  }
+}

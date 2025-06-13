@@ -1,6 +1,7 @@
 import React from "react";
 import menuImage from "../assets/menu.jpg"; // Replace with your image
 import { useNavigate } from "react-router-dom";
+import '../styles/MenuSection.css';
 
 const MenuSection = () => {
   const navigate = useNavigate();

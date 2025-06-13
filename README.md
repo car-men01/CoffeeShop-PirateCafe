@@ -48,6 +48,12 @@ This project represents a website for a Coffee Shop, built using modern web tech
 - **Two-Factor Authentication**: Enhanced security with verification codes sent via email.
 - **Role-Based Access Control**: Different permissions for users and admins.
 
+### AI-Powered Chatbot 🤖
+- **Intelligent Assistant**: AI chatbot powered by Google Gemini that provides personalized help
+- **Role-Aware Responses**: Different assistance based on user role (user vs admin)
+- **Contextual Information**: Access to real-time account data, orders, and system information
+- **24/7 Support**: Instant answers to common questions about orders, balance, products, and more
+
 ### CRUD Operations
 - **Menu**: View all products from the shop.
 - **Add a Product**: Add a new product to the menu.
@@ -101,6 +107,24 @@ Administrators have access to:
 - **Statistical Visualizations**: View detailed charts and graphs of site usage.
 - **User Management Tools**: Manage user accounts and permissions.
 - **Security Alert Configuration**: Simulate and monitor suspicious activities.
+- **AI Assistant for Admins**: Specialized chatbot responses for administrative tasks.
+
+---
+
+## 🤖 AI Chatbot Setup
+
+The application includes an intelligent AI chatbot powered by Google Gemini. To enable the chatbot:
+
+1. **Get Gemini API Key**: Visit [Google AI Studio](https://makersuite.google.com/app/apikey) and create an API key
+2. **Configure Environment**: Add your API key to `CoffeeShop-BackEnd/.env`:
+   ```
+   GEMINI_API_KEY=your_actual_api_key_here
+   ```
+3. **Usage**: The chatbot appears as a floating button for authenticated users and provides:
+   - **For Users**: Order history, balance info, product details, security tips
+   - **For Admins**: System statistics, user management help, administrative guidance
+
+For detailed setup instructions, see [CHATBOT_README.md](CHATBOT_README.md).
 
 ---
 

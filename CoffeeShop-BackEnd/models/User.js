@@ -59,6 +59,14 @@ const User = sequelize.define('User', {
     type: DataTypes.BOOLEAN,
     defaultValue: false,
     field: 'isVerified' // Explicitly specify the field name
+  },
+  balance: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: true,
+    defaultValue: null,
+    validate: {
+      min: 0
+    }
   }
 }, {
   timestamps: true,

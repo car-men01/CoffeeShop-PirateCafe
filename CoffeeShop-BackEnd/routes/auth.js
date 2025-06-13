@@ -10,7 +10,6 @@ const sequelizeDb = require('../models/index');
 const { JWT_SECRET } = require('../config');
 
 
-// const JWT_SECRET = process.env.JWT_SECRET || 'piratecafesecret';
 const JWT_EXPIRY = '24h';
 
 // Generate a random 6-digit code
@@ -162,10 +161,7 @@ router.post('/verify-login', async (req, res) => {
         }
       });
     }
-    
-    // REMOVED expiry check - no longer checking if code is expired
-    
-    // Mark user as verified and clear code with direct SQL - REMOVED expiry field
+        
     await sequelizeDb.query(`
       UPDATE "Users"
       SET "isVerified" = true,
@@ -226,7 +222,7 @@ router.post('/register', async (req, res) => {
     const user = await User.create({
       username,
       email,
-      password, // Bcrypt hashing happens in the User model hooks
+      password,
       role: 'user'
     });
 

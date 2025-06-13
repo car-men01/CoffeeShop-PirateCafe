@@ -1,6 +1,7 @@
 import React from "react";
 import heroImage from "../assets/coverr.jpg"; // cover img path
 import { useNavigate } from "react-router-dom";
+import '../styles/HeroSection.css';
 
 const HeroSection = () => {
   const navigate = useNavigate();

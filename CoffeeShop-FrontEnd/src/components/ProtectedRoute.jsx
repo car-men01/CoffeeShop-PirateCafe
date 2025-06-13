@@ -1,8 +1,9 @@
 import React, { useContext } from 'react';
 import { Navigate } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
+import '../styles/ProtectedRoute.css';
 
-const ProtectedRoute = ({ children, adminOnly = false }) => {
+const ProtectedRoute = ({ children, adminOnly = false, userOnly = false }) => {
   const { isAuthenticated, isAdmin, loading } = useContext(AuthContext);
 
   if (loading) {
@@ -17,6 +18,11 @@ const ProtectedRoute = ({ children, adminOnly = false }) => {
   // If this is an admin-only route, check admin role
   if (adminOnly && !isAdmin) {
     return <Navigate to="/" />;
+  }
+
+  // If this is a user-only route, prevent admin access
+  if (userOnly && isAdmin) {
+    return <Navigate to="/admin" />;
   }
 
   // If all checks pass, render the children

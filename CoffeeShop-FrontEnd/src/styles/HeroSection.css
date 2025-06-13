@@ -1,0 +1,100 @@
+/* Hero Section Styles */
+
+.hero {
+  margin: 0;
+  padding: 0;
+  position: relative; /* Changed from absolute to relative for natural flow */
+  height: 100vh; /* Made it much longer - full viewport height */
+  color: white;
+  width: 100%; /* Changed from 99vw to 100% for better responsiveness */
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.hero-content {
+  /* background: rgba(0, 0, 0, 0.5); */
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 80px; /* Account for navbar height */
+}
+
+.main-title {
+  font-size: clamp(3rem, 8vw, 7rem); /* Responsive font size */
+  margin: 0;
+  margin-top: 2rem; /* Reduced from 10rem for better flow */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
+
+.sub {
+  font-size: clamp(1rem, 2.5vw, 1.5rem); /* Responsive subtitle */
+  margin: 0;
+  margin-top: 2rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  max-width: 900px; /* Increased from 800px for longer text */
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.6; /* Better line spacing for readability */
+  padding: 0 20px; /* Add padding for mobile */
+}
+
+.order-btn {
+  margin-top: 3rem;
+  background: #660000;
+  color: rgb(255, 255, 255);
+  padding: 15px 25px;
+  border: none;
+  cursor: pointer;
+  font-size: clamp(1.2rem, 3vw, 2rem); /* Responsive button text */
+  border-radius: 8px; /* Add border radius for modern look */
+  transition: all 0.3s ease; /* Add smooth transition */
+}
+
+.order-btn:hover {
+  background: #4a0000; /* Darker red on hover */
+  transform: translateY(-2px); /* Subtle lift effect */
+  box-shadow: 0 4px 12px rgba(102, 0, 0, 0.3);
+}
+
+/* Responsive Design for Hero Section */
+@media (max-width: 768px) {
+  .hero {
+    height: 60vh; /* Shorter height on mobile (was 80vh, now 60vh) */
+    padding: 0 10px;
+  }
+  
+  .hero-content {
+    margin-top: 60px; /* Adjust for smaller navbar on mobile */
+  }
+  
+  .main-title {
+    margin-top: 1rem;
+  }
+  
+  .sub {
+    margin-top: 1.5rem;
+    padding: 0 20px;
+  }
+  
+  .order-btn {
+    margin-top: 2rem;
+    padding: 12px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    height: 50vh; /* Even shorter on very small screens */
+  }
+  
+  .hero-content {
+    margin-top: 40px;
+  }
+  
+  .order-btn {
+    padding: 10px 18px;
+  }
+}

@@ -1,18 +1,17 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useRef } from 'react';
 import axios from 'axios';
 import { API_URL } from '../config';
-import '../App.css';
+import '../styles/VerifyCode.css';
 import { NetworkContext } from '../NetworkContext';
 
 const VerifyCode = ({ userId, email, onSuccess, onCancel, isRegistration }) => {
-  const [code, setCode] = useState('');
+  const [code, setCode] = useState(['', '', '', '', '', '']);
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [countdown, setCountdown] = useState(60); // 1 minute countdown for resend
   const [canResend, setCanResend] = useState(false);
   const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
-
-
+  const inputRefs = useRef([]);
   // Timer for code expiry countdown
   useEffect(() => {
     const timer = setInterval(() => {
@@ -24,9 +23,52 @@ const VerifyCode = ({ userId, email, onSuccess, onCancel, isRegistration }) => {
         return prevTime - 1;
       });
     }, 1000);
-    
+
     return () => clearInterval(timer);
   }, []);
+
+  // Handle individual digit input
+  const handleDigitChange = (index, value) => {
+    // Only allow single digits
+    if (value.length > 1) return;
+    if (value && !/^\d$/.test(value)) return;
+
+    const newCode = [...code];
+    newCode[index] = value;
+    setCode(newCode);
+
+    // Auto-focus next input
+    if (value && index < 5) {
+      inputRefs.current[index + 1]?.focus();
+    }
+  };
+
+  // Handle backspace to move to previous input
+  const handleKeyDown = (index, e) => {
+    if (e.key === 'Backspace' && !code[index] && index > 0) {
+      inputRefs.current[index - 1]?.focus();
+    }
+  };
+
+  // Handle paste
+  const handlePaste = (e) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData('text');
+    const digits = pastedData.replace(/\D/g, '').slice(0, 6).split('');
+    
+    const newCode = [...code];
+    digits.forEach((digit, index) => {
+      if (index < 6) {
+        newCode[index] = digit;
+      }
+    });
+    setCode(newCode);
+
+    // Focus the next empty input or the last input
+    const nextEmptyIndex = newCode.findIndex(digit => !digit);
+    const focusIndex = nextEmptyIndex === -1 ? 5 : nextEmptyIndex;
+    inputRefs.current[focusIndex]?.focus();
+  };
 
   // Format remaining time as MM:SS
   const formatTime = (seconds) => {
@@ -79,19 +121,20 @@ const VerifyCode = ({ userId, email, onSuccess, onCancel, isRegistration }) => {
     e.preventDefault();
     setError('');
     
-    if (!code) {
-      setError('Please enter the verification code');
+    const codeString = code.join('');
+    if (!codeString || codeString.length !== 6) {
+      setError('Please enter the complete 6-digit verification code');
       return;
     }
     
     setIsLoading(true);
     
     try {
-      console.log(`Submitting code: ${code} for user ${userId}`);
+      console.log(`Submitting code: ${codeString} for user ${userId}`);
       
       const response = await axios.post(`${API_URL}/auth/verify-login`, {
         userId,
-        code
+        code: codeString
       });
       
       if (response.data && response.data.token) {
@@ -136,29 +179,34 @@ const VerifyCode = ({ userId, email, onSuccess, onCancel, isRegistration }) => {
         
         {error && <div className="error-message">{error}</div>}
         
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="verify-form">
           <div className="form-group">
             <label htmlFor="code">Verification Code</label>
-            <input
-              type="text"
-              id="code"
-              value={code}
-              onChange={(e) => setCode(e.target.value)}
-              placeholder="Enter 6-digit code"
-              maxLength="6"
-              pattern="[0-9]{6}"
-              required
-            />
-            {/* <div className="code-timer">
-              Code expires in: <span className={timeLeft < 60 ? 'time-critical' : ''}>{formatTime(timeLeft)}</span>
-            </div> */}
+            <div className="code-input-container">
+              {code.map((digit, index) => (
+                <input
+                  key={index}
+                  ref={(el) => (inputRefs.current[index] = el)}
+                  type="text"
+                  value={digit}
+                  onChange={(e) => handleDigitChange(index, e.target.value)}
+                  onKeyDown={(e) => handleKeyDown(index, e)}
+                  onPaste={handlePaste}
+                  className="code-digit-input"
+                  maxLength="1"
+                  inputMode="numeric"
+                  pattern="[0-9]"
+                  autoComplete="off"
+                />
+              ))}
+            </div>
           </div>
           
           <div className="verify-actions">
             <button 
               type="submit" 
               className="verify-button"
-              disabled={isLoading || !code || timeLeft === 0}
+              disabled={isLoading || code.join('').length !== 6 || timeLeft === 0}
             >
               {isLoading ? 'Verifying...' : isRegistration ? 'Complete Registration' : 'Log In'}
             </button>

@@ -2,7 +2,8 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../AuthContext';
 import VerifyCode from './VerifyCode';
-import '../App.css';
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import '../styles/Register.css';
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -83,11 +84,10 @@ const Register = () => {
       />
     );
   }
-  
-  // Otherwise, show the registration form
+    // Otherwise, show the registration form
   return (
     <div className="register-container">
-      <div className="register-form">
+      <div className="register-form centered-register-form">
         <h2>Register for Pirate Café</h2>
         
         {error && <div className="error-message">{error}</div>}
@@ -127,14 +127,13 @@ const Register = () => {
                 value={formData.password}
                 onChange={handleChange}
                 required
-              />
-              <button 
+              />              <button 
                 type="button"
                 className="password-toggle-btn"
                 onClick={togglePasswordVisibility}
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
-                {showPassword ? '👁️' : '👁️‍🗨️'}
+                {showPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
           </div>
@@ -149,14 +148,13 @@ const Register = () => {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 required
-              />
-              <button 
+              />              <button 
                 type="button"
                 className="password-toggle-btn"
                 onClick={toggleConfirmPasswordVisibility}
                 aria-label={showConfirmPassword ? "Hide password" : "Show password"}
               >
-                {showConfirmPassword ? '👁️' : '👁️‍🗨️'}
+                {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
               </button>
             </div>
           </div>
@@ -169,8 +167,7 @@ const Register = () => {
             {isLoading ? 'Registering...' : 'Register'}
           </button>
         </form>
-        
-        <div className="login-link">
+          <div className="login-link">
           <p>Already have an account? <a href="/login">Login here</a></p>
         </div>
       </div>

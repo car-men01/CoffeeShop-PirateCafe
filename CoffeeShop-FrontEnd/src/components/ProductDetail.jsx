@@ -4,6 +4,7 @@ import axios from "axios";
 import { NetworkContext } from "../NetworkContext";
 import { ProductContext } from "../ProductContext";
 import { API_URL, IMAGES_BASE_URL } from "../config";
+import '../styles/ProductDetail.css';
 
 const ProductDetail = () => {
     const { id } = useParams();
