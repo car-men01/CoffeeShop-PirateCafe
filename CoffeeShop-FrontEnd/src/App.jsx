@@ -15,6 +15,7 @@ import ScrollToTop from './ScrollToTop';
 import NetworkProvider from './NetworkContext';
 import ProductProvider from './ProductContext';
 import VideoSection from './components/VideoSection';
+import BestSellingSection from './components/BestSellingSection';
 import Login from './components/Login';
 import Register from './components/Register';
 import AdminDashboard from './components/AdminDashboard';
@@ -40,6 +41,7 @@ function App() {
                   <NavbarPages />
                   <HeroSection />
                   <VideoSection />
+                  <BestSellingSection />
                   <MenuSection />
                   <AddProductSection />
                   <Footer />

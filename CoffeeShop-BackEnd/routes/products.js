@@ -3,6 +3,7 @@ const router = express.Router();
 const { Op } = require('sequelize');
 const Product = require('../models/Product');
 const ProductCategory = require('../models/ProductCategory');
+const OrderItem = require('../models/OrderItem');
 const { generatedProducts } = require('../websocketServer');
 const { authenticate, adminOnly } = require('../middleware/auth');
 const { logActivity } = require('../utils/activityLogger');
@@ -164,6 +165,114 @@ router.get('/', async (req, res) => {
   } catch (err) {
     console.error('Error retrieving products:', err);
     res.status(500).json({ error: 'Server error while retrieving products' });
+  }
+});
+
+// Get best selling products (must be before /:id route)
+router.get('/best-selling', async (req, res) => {
+  try {
+    const { count = 3 } = req.query;    // Get all OrderItems to calculate total sales per product
+    const orderItems = await OrderItem.findAll({
+      attributes: ['ProductId', 'quantity'],
+      raw: true
+    });
+    
+    // Calculate total sales per product
+    const productTotals = {};
+    orderItems.forEach(item => {
+      if (!productTotals[item.ProductId]) {
+        productTotals[item.ProductId] = 0;
+      }
+      productTotals[item.ProductId] += item.quantity;
+    });    
+    // Get the product IDs sorted by total sold
+    const sortedProductIds = Object.entries(productTotals)
+      .sort(([,a], [,b]) => b - a) // Sort by total sold descending
+      .slice(0, parseInt(count)) // Take only the requested count
+      .map(([id]) => parseInt(id));
+    
+    // Get the actual product details for these IDs
+    const bestSelling = await Product.findAll({
+      where: {
+        id: {
+          [Op.in]: sortedProductIds
+        }
+      },
+      include: [
+        {
+          model: ProductCategory,
+          attributes: ['name']
+        }
+      ]
+    });
+    
+    // Sort the results to match the sales order and add totalSold
+    const bestSellingWithSales = sortedProductIds.map(id => {
+      const product = bestSelling.find(p => p.id === id);
+      if (product) {
+        return {
+          ...product.toJSON(),
+          totalSold: productTotals[id.toString()]
+        };
+      }
+      return null;
+    }).filter(Boolean);    // Format the response
+    const formattedProducts = bestSellingWithSales.map(product => ({
+      id: product.id,
+      name: product.name,
+      price: parseFloat(product.price),
+      image: product.image,
+      description: product.description,
+      category: product.ProductCategory ? product.ProductCategory.name : 'Uncategorized',
+      totalSold: product.totalSold
+    }));
+
+    // If we have products but they all have 0 sales, just return the first few products
+    // This handles the case where there are no orders yet
+    if (formattedProducts.length < count || formattedProducts.every(p => p.totalSold === 0)) {
+      const additionalProducts = await Product.findAll({
+        include: [ProductCategory],
+        limit: parseInt(count),
+        order: [['createdAt', 'DESC']]
+      });
+
+      const fallbackProducts = additionalProducts.map(product => ({
+        id: product.id,
+        name: product.name,
+        price: parseFloat(product.price),
+        image: product.image,
+        description: product.description,
+        category: product.ProductCategory ? product.ProductCategory.name : 'Uncategorized',
+        totalSold: 0
+      }));
+
+      return res.json({
+        success: true,
+        data: fallbackProducts,
+        meta: {
+          count: fallbackProducts.length,
+          requestedCount: parseInt(count),
+          note: 'Using most recent products as no sales data available'
+        }
+      });
+    }
+
+    res.json({
+      success: true,
+      data: formattedProducts,
+      meta: {
+        count: formattedProducts.length,
+        requestedCount: parseInt(count)
+      }
+    });
+
+  } catch (error) {
+    console.error('Error fetching best selling products:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch best selling products',
+      details: error.message
+    });
   }
 });
 

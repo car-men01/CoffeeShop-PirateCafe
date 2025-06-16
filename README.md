@@ -100,6 +100,194 @@ This project represents a website for a Coffee Shop, built using modern web tech
 
 ---
 
+## 🤖 Intelligent Recommendation System
+
+Pirate Café features a sophisticated AI-powered recommendation engine that personalizes the user experience by suggesting coffee products based on user behavior and preferences.
+
+### 🎯 Recommendation Strategies
+
+The system implements multiple recommendation algorithms:
+
+#### **1. Hybrid Strategy (Default)**
+- **Weight Distribution**: 40% Collaborative + 30% Content-Based + 30% Popularity
+- **Best For**: Balanced recommendations combining user preferences and trending products
+- **Fallback**: Automatically switches to popularity-based if insufficient data
+
+#### **2. Collaborative Filtering**
+- **Algorithm**: "Users who ordered X also ordered Y"
+- **Data Analysis**: User behavior patterns and similar taste profiles
+- **Minimum Requirements**: 2+ orders for personalization
+
+#### **3. Content-Based Filtering**
+- **Category Preferences**: Based on user's favorite coffee categories
+- **Price Range Matching**: Suggests products within user's typical spending range
+- **Feature Similarity**: Analyzes product characteristics and descriptions
+
+#### **4. Popularity-Based**
+- **Trending Products**: Most ordered items in the last 30 days
+- **Anonymous Users**: Default strategy for non-authenticated visitors
+- **Minimum Threshold**: Products with 5+ orders considered popular
+
+### 🔧 Configuration & Customization
+
+#### **Easy Configuration Management**
+All recommendation criteria can be modified in `CoffeeShop-BackEnd/config/recommendationConfig.js`:
+
+```javascript
+module.exports = {
+  strategies: {
+    default: 'hybrid',           // Change default strategy
+    hybrid: {
+      weights: {
+        popularity: 0.3,         // Modify weight distribution
+        collaborative: 0.4,      // Adjust collaboration strength
+        content: 0.3            // Control content matching
+      }
+    }
+  },
+  
+  criteria: {
+    orderHistory: {
+      lookbackDays: 90,         // How far back to analyze orders
+      minOrdersRequired: 2      // Minimum orders for personalization
+    },
+    
+    priceRange: {
+      tolerance: 0.3,           // 30% price variation tolerance
+      defaultRange: [5, 25]     // Price range for new users
+    },
+    
+    popularity: {
+      timeWindow: 30,           // Days for popularity calculation
+      minOrdersForPopular: 5    // Minimum orders for trending status
+    }
+  }
+}
+```
+
+#### **Dynamic Weight Adjustment**
+Administrators can customize recommendation weights in real-time:
+
+```javascript
+// Custom hybrid strategy with different weights
+const customRecommendations = await getCustomRecommendations(userId, {
+  popularity: 0.5,     // 50% popularity
+  collaborative: 0.3,  // 30% collaborative
+  content: 0.2        // 20% content-based
+});
+```
+
+### 📊 Performance Features
+
+- **Smart Caching**: 10-minute cache for recommendations, 30-minute cache for popular products
+- **Fallback Strategy**: Automatic degradation to simpler algorithms if complex ones fail
+- **Error Handling**: Graceful fallbacks ensure recommendations always work
+- **Scalable Architecture**: Designed to handle growing user base and product catalog
+
+### 🎨 User Experience
+
+#### **Frontend Integration**
+- **MenuPage Display**: Recommendations appear prominently on the main menu
+- **Personalized Titles**: "Recommended for You" for authenticated users
+- **Anonymous Support**: "Popular Choices" for visitors
+- **Loading States**: Smooth loading animations and error handling
+- **Responsive Design**: Works perfectly on all device sizes
+
+#### **Recommendation Display**
+- **Product Cards**: Beautiful cards showing recommended products
+- **Reasoning**: Each recommendation includes explanation ("Popular choice", "Matches your preferences")
+- **Quick Actions**: One-click add to cart functionality
+- **Refresh Option**: Users can refresh recommendations anytime
+
+### 🔍 API Endpoints
+
+The recommendation system provides comprehensive REST API endpoints:
+
+```bash
+# Get personalized recommendations
+GET /api/recommendations/user/:userId?strategy=hybrid&count=5
+
+# Get popular products (no auth required)
+GET /api/recommendations/popular?count=5
+
+# Get anonymous recommendations
+GET /api/recommendations/anonymous?count=5
+
+# Custom weighted recommendations
+POST /api/recommendations/user/:userId/custom
+Body: { weights: { popularity: 0.3, collaborative: 0.4, content: 0.3 } }
+
+# Get available strategies
+GET /api/recommendations/strategies
+
+# Admin: View configuration
+GET /api/recommendations/config
+
+# Admin: Clear cache
+POST /api/recommendations/cache/clear
+```
+
+### 📈 Analytics & Monitoring
+
+- **Strategy Performance**: Track which strategies perform best
+- **Cache Hit Rates**: Monitor system performance
+- **User Engagement**: Measure recommendation click-through rates
+- **A/B Testing Ready**: Easy to test different weight configurations
+
+### 🛠️ How to Modify Recommendation Criteria
+
+#### **1. Change Strategy Weights**
+Edit `recommendationConfig.js`:
+```javascript
+strategies: {
+  hybrid: {
+    weights: {
+      popularity: 0.4,    // Increase popularity influence
+      collaborative: 0.3, // Decrease collaborative filtering
+      content: 0.3       // Keep content-based the same
+    }
+  }
+}
+```
+
+#### **2. Adjust Time Windows**
+```javascript
+criteria: {
+  orderHistory: {
+    lookbackDays: 180,        // Look back 6 months instead of 3
+  },
+  popularity: {
+    timeWindow: 14,           // Use 2-week popularity window
+  }
+}
+```
+
+#### **3. Modify Price Sensitivity**
+```javascript
+criteria: {
+  priceRange: {
+    tolerance: 0.5,           // Allow 50% price variation
+    defaultRange: [3, 30]     // Expand default price range
+  }
+}
+```
+
+#### **4. Change Minimum Requirements**
+```javascript
+criteria: {
+  orderHistory: {
+    minOrdersRequired: 1,     // Personalize after just 1 order
+  },
+  popularity: {
+    minOrdersForPopular: 3,   // Lower threshold for popular products
+  }
+}
+```
+
+The system automatically picks up configuration changes without requiring server restarts, making it easy to fine-tune recommendations based on user feedback and business needs.
+
+---
+
 ## 📊 Admin Features
 
 Administrators have access to:

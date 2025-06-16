@@ -6,14 +6,14 @@ const { User, Order, OrderItem, Product, ProductCategory, MonitoredUser, Activit
 const { Op } = require('sequelize');
 
 // Initialize Gemini AI
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'your-gemini-api-key-here');
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || 'AIzaSyCYVeNtoxASSV8zF2IMB1tjDN39HeKCSlQ');
 const model = genAI.getGenerativeModel({ 
   model: "gemini-2.0-flash-exp",
   generationConfig: {
     temperature: 0.7,
     topK: 40,
     topP: 0.95,
-    maxOutputTokens: 2048, // Gemini 2.0 has better quota limits
+    maxOutputTokens: 2048,
   }
 });
 

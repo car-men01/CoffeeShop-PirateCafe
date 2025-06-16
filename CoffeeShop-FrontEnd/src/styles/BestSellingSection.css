@@ -1,0 +1,335 @@
+/* Best Selling Section */
+.best-selling-section {
+  background-color: #D2B48C; /* Light brown background */
+  padding: 4rem 0;
+  margin: 0; /* Removed margin as requested */
+}
+
+.best-selling-section .container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #000000; /* Black title */
+  margin-bottom: 3rem;
+  font-family: 'Georgia', serif;
+}
+
+.best-selling-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr; /* Left card takes 2/3, right cards take 1/3 */
+  gap: 2rem;
+  align-items: stretch;
+}
+
+/* Main product card - left side (larger card like in image) */
+.main-product-card {
+  background: white;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+}
+
+.main-product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+}
+
+.main-product-image {
+  height: 400px; /* Taller for the main card */
+  overflow: hidden;
+  position: relative;
+}
+
+.main-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.main-product-card:hover .main-product-image img {
+  transform: scale(1.05);
+}
+
+.main-product-info {
+  padding: 2rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  text-align: left; /* Left aligned like in the image */
+  position: relative;
+}
+
+.main-product-info .product-name {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #8B4513;
+  margin-bottom: 1rem;
+  font-family: 'Georgia', serif;
+  text-align: center; /* Center the title */
+}
+
+.main-product-info .product-description {
+  color: #666;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  margin-bottom: 1.5rem;
+  flex: 1;
+  text-align: center; /* Center description */
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.main-product-info .product-category {
+  display: inline-block;
+  background: #7C90A0;
+  color: white;
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  align-self: center; /* Center the category badge */
+}
+
+.main-product-info .product-price {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #D2691E;
+  text-align: center; /* Centered price */
+  margin-top: auto;
+}
+
+/* Side products container - right side */
+.side-products {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  height: 100%;
+}
+
+/* Side product cards (smaller cards like in image) */
+.side-product-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  height: auto; /* Let them grow to match the left card */
+}
+
+.side-product-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.side-product-image {
+  width: 140px; /* Wider image area for better pictures */
+  height: 100%;
+  min-height: 140px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.side-product-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.side-product-card:hover .side-product-image img {
+  transform: scale(1.1);
+}
+
+.side-product-info {
+  padding: 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: right; /* Right aligned like in the image */
+}
+
+.side-product-info .product-name {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #8B4513;
+  margin-bottom: 0.8rem;
+  font-family: 'Georgia', serif;
+  text-align: center; /* Center the product name */
+}
+
+.side-product-info .product-description {
+  color: #666;
+  font-size: 1rem;
+  line-height: 1.4;
+  margin-bottom: 0.8rem;
+  flex: 1;
+  text-align: center; /* Center description */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.side-product-info .product-category {
+  display: inline-block;
+  background: #7C90A0;
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 15px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  margin-bottom: 0.8rem;
+  align-self: center; /* Center the category badge */
+}
+
+.side-product-info .product-price {
+  font-size: 1.3rem;
+  font-weight: bold;
+  color: #D2691E;
+  text-align: center; /* Centered price */
+}
+
+/* Add to Cart Button Styles */
+.add-to-cart-btn {
+  background: #7C90A0;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  align-self: center;
+  min-width: 140px;
+}
+
+.add-to-cart-btn:hover:not(:disabled) {
+  background: #5a6f7a;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.add-to-cart-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.side-add-to-cart {
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  min-width: 120px;
+}
+
+/* Loading and error states */
+.loading-message,
+.error-message,
+.no-products-message {
+  text-align: center;
+  padding: 3rem;
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.error-message {
+  color: #d32f2f;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .best-selling-section {
+    padding: 2rem 0;
+  }
+  
+  .section-title {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+  }
+  
+  .best-selling-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  
+  .main-product-image {
+    height: 250px;
+  }
+  
+  .main-product-info {
+    padding: 1.5rem;
+    text-align: center;
+  }
+  
+  .main-product-info .product-name {
+    font-size: 1.8rem;
+  }
+  
+  .side-product-card {
+    flex-direction: column;
+  }
+  
+  .side-product-image {
+    width: 100%;
+    height: 180px;
+  }
+  
+  .side-product-info {
+    padding: 1.2rem;
+    text-align: center;
+  }
+  
+  .add-to-cart-btn {
+    padding: 10px 20px;
+    font-size: 0.9rem;
+  }
+  
+  .side-add-to-cart {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .best-selling-section .container {
+    padding: 0 0.5rem;
+  }
+  
+  .section-title {
+    font-size: 1.8rem;
+  }
+  
+  .main-product-info .product-name {
+    font-size: 1.5rem;
+  }
+  
+  .side-product-info .product-name {
+    font-size: 1.2rem;
+  }
+}

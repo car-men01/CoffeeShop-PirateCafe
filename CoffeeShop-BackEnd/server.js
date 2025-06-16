@@ -12,6 +12,7 @@ const cartRoutes = require('./routes/cart');
 const orderRoutes = require('./routes/orders');
 const walletRoutes = require('./routes/wallet');
 const chatbotRoutes = require('./routes/chatbot');
+const recommendationRoutes = require('./routes/recommendations');
 const config = require('./config');
 const sequelize = require('./models/index');
 const { startMonitoring } = require('./utils/userMonitoring');
@@ -45,7 +46,7 @@ app.use('/assets', express.static(path.join(__dirname, 'data/assets')));
 // app.use('/videos/thumbnails', express.static(path.join(__dirname, 'public/videos/thumbnails')));
 
 // Set up all routes
-app.use('/products', productRoutes);
+app.use('/api/products', productRoutes);
 app.use('/videos', videosRoutes);
 app.use('/analytics', analyticsRoutes);
 app.use('/auth', authRoutes);
@@ -54,6 +55,7 @@ app.use('/cart', cartRoutes);
 app.use('/orders', orderRoutes);
 app.use('/api/wallet', walletRoutes);
 app.use('/api/chatbot', chatbotRoutes);
+app.use('/api/recommendations', recommendationRoutes);
 
 // Start the user monitoring service
 startMonitoring();

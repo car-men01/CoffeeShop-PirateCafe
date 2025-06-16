@@ -197,7 +197,7 @@ const ProductDetail = () => {
                     if (cleanData._isOffline) delete cleanData._isOffline;
                     
                     console.log("Sending to server:", cleanData);
-                    const response = await axios.post(`${API_URL}/products`, cleanData);
+                    const response = await axios.post(`${API_URL}/api/products`, cleanData);
                     const realId = response.data.id;
                     
                     console.log(`Created on server with real ID: ${realId}`);

@@ -302,4 +302,82 @@ router.post('/simulate-activity', authenticate, async (req, res) => {
   }
 });
 
+// Create test orders for best selling products demo (admin only)
+router.post('/create-test-orders', authenticate, adminOnly, async (req, res) => {
+  try {
+    const { Product, Order, OrderItem, User } = require('../models');
+    
+    // Get some products to create orders for
+    const products = await Product.findAll({ limit: 5 });
+    if (products.length === 0) {
+      return res.status(400).json({ error: 'No products available to create test orders' });
+    }
+
+    // Get some users (or create a test user if none exist)
+    let users = await User.findAll({ where: { role: 'user' }, limit: 3 });
+    
+    if (users.length === 0) {
+      // Create a test user if none exist
+      const testUser = await User.create({
+        username: 'testuser',
+        email: 'test@example.com',
+        password: 'hashedpassword',
+        role: 'user'
+      });
+      users = [testUser];
+    }
+
+    const testOrders = [];
+    const orderCounts = {};
+
+    // Create varying numbers of orders for different products to simulate popularity
+    const productOrderCounts = [8, 5, 3, 2, 1]; // Different popularity levels
+
+    for (let i = 0; i < products.length && i < productOrderCounts.length; i++) {
+      const product = products[i];
+      const orderCount = productOrderCounts[i];
+      orderCounts[product.name] = orderCount;
+
+      for (let j = 0; j < orderCount; j++) {
+        const randomUser = users[Math.floor(Math.random() * users.length)];
+        const randomDate = new Date();
+        randomDate.setDate(randomDate.getDate() - Math.floor(Math.random() * 25)); // Random date in last 25 days
+
+        // Create order
+        const order = await Order.create({
+          UserId: randomUser.id,
+          total: parseFloat(product.price) + Math.random() * 10, // Add some variation
+          status: 'completed',
+          orderDate: randomDate
+        });
+
+        // Create order item
+        await OrderItem.create({
+          OrderId: order.id,
+          ProductId: product.id,
+          quantity: 1,
+          price: product.price,
+          productName: product.name
+        });
+
+        testOrders.push(order);
+      }
+    }
+
+    res.json({
+      success: true,
+      message: `Created ${testOrders.length} test orders for best selling products demo`,
+      ordersCreated: testOrders.length,
+      productOrderCounts: orderCounts
+    });
+
+  } catch (error) {
+    console.error('Error creating test orders:', error);
+    res.status(500).json({
+      error: 'Failed to create test orders',
+      details: error.message
+    });
+  }
+});
+
 module.exports = router;

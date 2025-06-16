@@ -58,6 +58,8 @@ import berryTreasureImg from "../assets/berry_treasure.jpg";
 import chamomileImg from "../assets/captains_chamomile.jpg";
 import mintyShipmateImg from "../assets/minty.jpg";
 import addProductMainImg from "../assets/add_product_main.jpg";
+import RecommendationsSection from './RecommendationsSection';
+import RecommendationErrorBoundary from './RecommendationErrorBoundary';
 
 
 const imageFallbackMap = {
@@ -738,7 +740,7 @@ const MenuPage = () => {
         const fetchCategories = async () => {
             try {
                 if (isOnline && isServerUp) {
-                    const response = await axios.get(`${API_URL}/products/categories`);
+                    const response = await axios.get(`${API_URL}/api/products/categories`);
                     setAllCategories(response.data);
                     
                     // Cache for offline use
@@ -1207,7 +1209,7 @@ const MenuPage = () => {
                     const timeoutId = setTimeout(() => controller.abort(), 5000); // 5-second timeout
                     
                     // Make the request
-                    const response = await axios.get(`${API_URL}/products?${queryParams.toString()}`, {
+                    const response = await axios.get(`${API_URL}/api/products?${queryParams.toString()}`, {
                         signal: controller.signal
                     }).finally(() => clearTimeout(timeoutId));
                     
@@ -1410,10 +1412,17 @@ const MenuPage = () => {
                     </div>
                 </div>
 
-                {/* Connection status indicator <ConnectionIndicator />*/}
-
-                {/* Network status indicators */}
+                {/* Connection status indicator <ConnectionIndicator />*/}                {/* Network status indicators */}
                 <NetworkStatus />
+                  {/* Recommendations Section */}
+                <RecommendationErrorBoundary>
+                    <RecommendationsSection 
+                        title="Recommended for You ☕" 
+                        strategy="hybrid" 
+                        count={4}
+                        showForAnonymous={true}
+                    />
+                </RecommendationErrorBoundary>
                 
                 {/* Error display */}
                 {error && (

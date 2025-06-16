@@ -75,7 +75,7 @@ export const NetworkProvider = ({ children }) => {
         const cacheCategories = async () => {
             if (isOnline && isServerUp) {
                 try {
-                    const response = await axios.get(`${API_URL}/products/categories`);
+                    const response = await axios.get(`${API_URL}/api/products/categories`);
                     if (response.data) {
                         localStorage.setItem('cachedCategories', JSON.stringify(response.data));
                         console.log('Categories cached for offline use');
@@ -97,7 +97,7 @@ export const NetworkProvider = ({ children }) => {
     }
     
     try {
-      await axios.get(`${API_URL}/products/categories`, { timeout: 5000 });
+      await axios.get(`${API_URL}/api/products/categories`, { timeout: 5000 });
       setIsServerUp(true);
       return true;
     } catch (error) {
@@ -425,7 +425,7 @@ export const NetworkProvider = ({ children }) => {
       // STEP 1: Get the latest products from server to ensure we have the most accurate data
       const freshProducts = [];
       try {
-        const response = await axios.get(`${API_URL}/products`);
+        const response = await axios.get(`${API_URL}/api/products`);
         if (response.data && response.data.products) {
           freshProducts.push(...response.data.products);
           console.log(`SYNC: Fetched ${freshProducts.length} products from server`);
@@ -687,7 +687,7 @@ export const NetworkProvider = ({ children }) => {
               const realId = localStorage.getItem(`id_mapping_${tempId}`);
               if (realId) {
                 // We have a real ID now! Try to fetch the product from server
-                const response = await axios.get(`${API_URL}/products/${realId}`);
+                const response = await axios.get(`${API_URL}/api/products/${realId}`);
                 console.log(`ONLINE: Successfully synced and fetched product with ID ${realId}`);
                 return response;
               } else {
@@ -734,24 +734,30 @@ export const NetworkProvider = ({ children }) => {
         } else {
           console.warn('No authentication token found for request to', path);
         }
-        
-        // Configure axios options
+          // Configure axios options
         const config = { headers };
+        
+        // Add /api prefix for certain endpoints if not already present
+        const needsApiPrefix = ['/products', '/orders', '/cart', '/auth', '/analytics', '/recommendations', '/wallet', '/chatbot', '/admin'];
+        let fullPath = path;
+        
+        if (needsApiPrefix.some(prefix => path.startsWith(prefix)) && !path.startsWith('/api/')) {
+          fullPath = `/api${path}`;
+        }
         
         let response;
         
         switch (method) {
           case 'GET':
-            response = await axios.get(`${API_URL}${path}`, config);
-            break;
-          case 'POST':
-            response = await axios.post(`${API_URL}${path}`, data, config);
+            response = await axios.get(`${API_URL}${fullPath}`, config);
+            break;          case 'POST':
+            response = await axios.post(`${API_URL}${fullPath}`, data, config);
             break;
           case 'PUT':
-            response = await axios.put(`${API_URL}${path}`, data, config);
+            response = await axios.put(`${API_URL}${fullPath}`, data, config);
             break;
           case 'DELETE':
-            response = await axios.delete(`${API_URL}${path}`, config);
+            response = await axios.delete(`${API_URL}${fullPath}`, config);
             break;
           default:
             throw new Error(`Invalid method: ${method}`);

@@ -3,7 +3,7 @@ import { NetworkContext } from "./NetworkContext";
 
 export const ProductContext = createContext();
 
-const ProductProvider = ({ children }) => {
+export const ProductProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -175,20 +175,100 @@ const ProductProvider = ({ children }) => {
       throw err;
     }
   };
+  // Recommendation-related functions
+  const getRecommendations = async (userId, options = {}) => {
+    try {
+      if (!userId) {
+        // Get anonymous recommendations
+        const response = await apiGet('/api/recommendations/anonymous', {
+          params: {
+            count: options.count || 5,
+            category: options.category
+          }
+        });
+        return response.offline ? [] : response.data?.data || [];
+      }
 
-  return (
-    <ProductContext.Provider value={{ 
+      // Get personalized recommendations
+      const response = await apiGet(`/api/recommendations/user/${userId}`, {
+        params: {
+          strategy: options.strategy || 'hybrid',
+          count: options.count || 5,
+          category: options.category
+        }
+      });
+      
+      return response.offline ? [] : response.data?.data || [];
+    } catch (error) {
+      console.error('Error fetching recommendations:', error);
+      // Return empty array instead of throwing
+      return [];
+    }
+  };
+
+  const getPopularProducts = async (count = 5) => {
+    try {
+      const response = await apiGet('/api/recommendations/popular', {
+        params: { count }
+      });
+      return response.offline ? [] : response.data?.data || [];
+    } catch (error) {
+      console.error('Error fetching popular products:', error);
+      // Return empty array instead of throwing
+      return [];
+    }
+  };
+
+  const getCustomRecommendations = async (userId, weights, options = {}) => {
+    try {
+      if (!userId || !weights) {
+        return [];
+      }
+
+      const response = await apiPost(`/api/recommendations/user/${userId}/custom`, {
+        weights,
+        count: options.count || 5,
+        category: options.category
+      });
+      
+      return response.offline ? [] : response.data?.data || [];
+    } catch (error) {
+      console.error('Error fetching custom recommendations:', error);
+      // Return empty array instead of throwing
+      return [];    }
+  };  // Get best selling products
+  const getBestSellingProducts = async (count = 3) => {
+    try {
+      const response = await apiGet('/products/best-selling', {
+        params: { count }
+      });
+      
+      return response.data?.data || [];
+    } catch (error) {
+      console.error('Error fetching best selling products:', error);
+      throw error; // Let the component handle the error
+    }
+  };
+
+  return (    <ProductContext.Provider value={{ 
       products, 
       addProduct, 
       updateProduct, 
       deleteProduct,
       loading,
       error,
-      isOffline: !isOnline || !isServerUp
+      isOffline: !isOnline || !isServerUp,
+      getRecommendations,
+      getPopularProducts,
+      getCustomRecommendations,
+      getBestSellingProducts
     }}>
       {children}
     </ProductContext.Provider>
   );
 };
+
+// Set display name for better debugging
+ProductProvider.displayName = 'ProductProvider';
 
 export default ProductProvider;
